@@ -1,8 +1,8 @@
 import sqlite3
 import csv
 
-csv_file = '/Users/soorhansalia/DSA-Project3/crimeData/Crime_Responses.csv'
-sqlite_db = '/Users/soorhansalia/DSA-Project3/db/incidents.db'
+csv_file = "/Users/soorhansalia/gainesville-crime/Crime_Responses.csv"
+sqlite_db = '/Users/soorhansalia/gainesville-crime/db/crime.db'
 
 conn = sqlite3.connect(sqlite_db)
 cursor = conn.cursor()
