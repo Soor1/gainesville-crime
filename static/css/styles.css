@@ -1,0 +1,13 @@
+#container {
+    display: flex;
+}
+
+#content {
+    flex: 1;
+}
+
+#map {
+    height: 800px;
+    width: 800px;
+    margin-left: auto;
+}
