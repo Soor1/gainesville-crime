@@ -20,6 +20,8 @@
     <div id="container">
         <div id="content">
             <h1>Soor, Blake, and Ethan</h1>
+            <input type="range" id="radius" name="radius" min="0" max="10" step="0.1" value="1" />
+            <label for="radius">Radius: <output id="value"></output></label>
         </div>
         <div id="map"></div>
     </div>
@@ -28,6 +30,11 @@
         crossorigin="">
     </script>
     <script>
+        const value = document.querySelector("#value");
+        const radius = document.querySelector("#radius");
+        
+        value.textContent = radius.value;
+
         var map = L.map('map').setView([29.6520, -82.3250], 13);
     
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -35,7 +42,24 @@
         }).addTo(map);
     
         var marker = L.marker([29.6520, -82.3250]).addTo(map)
-            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+            .bindPopup('University of Florida<br>Go Gators!')
             .openPopup();
+
+        var circle = L.circle(marker.getLatLng(), {
+            color: 'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+            radius: radius.value * 1609.344
+            }).addTo(map);
+        
+        radius.addEventListener("input", (e) => {
+            value.textContent = e.target.value;
+            circle.setRadius(e.target.value * 1609.344);
+        });
+
+        map.on("click", function(e){
+            marker.setLatLng(e.latlng);
+            circle.setLatLng(e.latlng);
+        });
     </script>
 </body>
