@@ -14,3 +14,4 @@
 - https://developers.google.com/maps/documentation/embed/get-started?hl=en&_gl=1*1lbd5e3*_ga*MTI4MjYyNTgyNC4xNzE5MTk3NzAw*_ga_NRWSTWS78N*MTcxOTc5NjI5NC4xLjEuMTcxOTc5NjMwNi4wLjAuMA..
 - https://stackoverflow.com/questions/53233228/plot-latitude-longitude-from-csv-in-python-3-6
 - https://gis.ufl.edu/hosting/rest/services
+- https://campusmap.ufl.edu/#/
