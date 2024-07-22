@@ -11,7 +11,7 @@ def about():
     return render_template('about.html')
 
 @app.route('/visualization')
-def about():
+def visualization():
     return render_template('visualization.html')
 
 
