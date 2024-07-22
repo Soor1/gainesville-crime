@@ -7,7 +7,26 @@
 }
 
 #map {
-    height: 800px;
-    width: 800px;
+    height: 600px;
+    width: 650px;
     margin-left: auto;
+    padding: 10px 10px;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+#about-link, #time-complexity-link {
+    text-decoration: none;
+    color: #000; /* Adjust color as needed */
+}
+
+#title {
+    margin: 0;
+    text-align: center;
+    flex-grow: 1;
 }
