@@ -102,12 +102,12 @@ async function heapsort(nums, container) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+window.onload = function () {
     randomArrays();
     renderBars(quicksortNums, quicksortBars);
     renderBars(heapsortNums, heapsortBars);
     console.log(heapsortNums[1321]);
-});
+};
 
 sort_btn.addEventListener("click", async function () {
     await quicksort(quicksortNums, 0, quicksortNums.length - 1, quicksortBars);
