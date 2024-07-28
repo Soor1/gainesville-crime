@@ -28,13 +28,13 @@ cursor.execute('''
 
 with open(csv_file, 'r') as file:
     reader = csv.reader(file)
-    headers = next(reader)  
+    headers = next(reader)
     rows = [row for row in reader]
 
 cursor.executemany('''
     INSERT INTO incidents (
-        ID, Incident_Type, Report_Date, Offense_Date, Report_Hour_of_Day, 
-        Report_Day_of_Week, Offense_Hour_of_Day, Offense_Day_of_Week, City, 
+        ID, Incident_Type, Report_Date, Offense_Date, Report_Hour_of_Day,
+        Report_Day_of_Week, Offense_Hour_of_Day, Offense_Day_of_Week, City,
         State, Address, Latitude, Longitude, Location
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ''', rows)
