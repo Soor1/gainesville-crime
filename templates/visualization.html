@@ -5,9 +5,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="../static/css/visualization.css" />
-        <title>Visualiztion</title>
+        <title>Visualization</title>
     </head>
     <body>
+        <div id="header">
+            <a href="{{ url_for('about') }}" id="about-link">About</a>
+            <h1 id="title">Time Complexity Visualization</h1>
+            <a href="{{ url_for('index') }}" id="index-link">Home</a>
+        </div>
         <div class="container">
             <div class="bars_container" id="bars_container"></div>
 
