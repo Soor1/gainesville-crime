@@ -6,9 +6,8 @@ let numDataPoints = 500;
 let heightFactor = 400;
 let heapsortNums = [];
 let quicksortNums = [];
-let speedFactor = 5; // Default speed
+let speedFactor = 5;
 
-// Event listener for speed dropdown
 speed.addEventListener("change", (e) => {
     speedFactor = parseInt(e.target.value);
     console.log("Speed factor changed to:", speedFactor);
@@ -24,7 +23,7 @@ function randomArrays() {
 }
 
 function renderBars(array, container) {
-    container.innerHTML = ""; // Clear previous bars
+    container.innerHTML = "";
     for (let i = 0; i < array.length; i++) {
         let bar = document.createElement("div");
         bar.classList.add("bar");
@@ -111,24 +110,18 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 sort_btn.addEventListener("click", async function () {
-    // Perform quicksort
     await quicksort(quicksortNums, 0, quicksortNums.length - 1, quicksortBars);
 
-    // Get children bars after quicksort
     let quicksortBarsChildren = quicksortBars.children;
 
-    // Turn quicksort bars green after sorting
     for (let bar of quicksortBarsChildren) {
         bar.style.backgroundColor = "#0f141d";
     }
 
-    // Perform heapsort
     await heapsort(heapsortNums, heapsortBars);
 
-    // Get children bars after heapsort
     let heapsortBarsChildren = heapsortBars.children;
 
-    // Turn heapsort bars green after sorting
     for (let bar of heapsortBarsChildren) {
         bar.style.backgroundColor = "#0f141d";
     }
