@@ -25,7 +25,6 @@ body {
     text-decoration: none;
     font-weight: 700;
     color: #ffffff;
-    /* Adjust color as needed */
     padding: 10px;
     width: 20vw;
     text-align: center;
@@ -37,23 +36,39 @@ body {
     justify-content: space-between;
     align-items: center;
     height: 90vh;
+    padding: 60px 60px 0px 60px;
+}
+
+.visualization_container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-grow: 1;
+    margin-bottom: 0px;
+}
+
+.box {
+    border: 7px solid #0f141d;
+    border-radius: 20px;
+    height: 70vh;
+    width: 45vw;
+    background: #edf2f4;
+    padding: 10px;
+    overflow: hidden;
 }
 
 .bars_container {
-    flex-grow: 1;
-    width: 100%;
     display: flex;
+    flex-direction: row;
+    height: 100%;
     align-items: flex-end;
-    justify-content: center;
 }
 
-/* .buttons_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    padding: 20px;
-} */
+.bar {
+    width: 10px;
+    background-color: #8d99ae;
+    border-radius: 2px;
+}
 
 .buttons_container {
     display: flex;
@@ -61,11 +76,10 @@ body {
     align-items: center;
     gap: 10px;
     padding: 10px;
-    /* margin-bottom: 0px; /* Adjust this value as needed to move elements up */
-    */
+    margin-bottom: 0px;
 }
 
-.buttons_container>button,
+.buttons_container > button,
 select {
     width: 200px;
     height: 30px;
@@ -77,12 +91,31 @@ select {
     cursor: pointer;
     text-align: center;
     transition: 0.2s ease-in-out;
-    margin-bottom: 0px;
-    /* Add some margin to create space above */
 }
 
-.buttons_container>button:hover,
+.buttons_container > button:hover,
 select:hover {
     background-color: #55666d;
-    /* Change color on hover for better UX */
+}
+
+@media (max-width: 800px) {
+    .visualization_container {
+        flex-direction: column;
+        height: calc(80vh - 60px);
+    }
+
+    .box {
+        width: 80vw;
+        height: 70vh;
+    }
+
+    #header > * {
+        font-size: 30px;
+        max-height: 100%;
+    }
+
+    .buttons_container {
+        flex-direction: column;
+        gap: 0px;
+    }
 }
