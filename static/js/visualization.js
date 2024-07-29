@@ -106,7 +106,6 @@ window.onload = function () {
     randomArrays();
     renderBars(quicksortNums, quicksortBars);
     renderBars(heapsortNums, heapsortBars);
-    console.log(heapsortNums[1321]);
 };
 
 sort_btn.addEventListener("click", async function () {
