@@ -1,23 +1,17 @@
 let sort_btn = document.getElementById("sort_btn");
-let speed = document.getElementById("speed");
-let quicksortBars = document.getElementById("quicksort_bars");
-let heapsortBars = document.getElementById("heapsort_bars");
-let numDataPoints = 500;
+let reset_btn = document.getElementById("reset_btn");
+let sort_bars = document.getElementById("sort_bars");
+let sort_select = document.getElementById("sort_select");
+let sort_title = document.getElementById("sort_title");
+let numDataPoints = 200;
 let heightFactor = 400;
-let heapsortNums = [];
-let quicksortNums = [];
-let speedFactor = 5;
-
-speed.addEventListener("change", (e) => {
-    speedFactor = parseInt(e.target.value);
-    console.log("Speed factor changed to:", speedFactor);
-});
+let nums = [];
+let speedFactor = 50;
 
 function randomArrays() {
     for (let x = 0; x < numDataPoints; x++) {
         let randValue = Math.random();
-        heapsortNums.push(randValue);
-        quicksortNums.push(randValue);
+        nums.push(randValue);
     }
     console.log("Arrays generated");
 }
@@ -102,28 +96,47 @@ async function heapsort(nums, container) {
     }
 }
 
-window.onload = function () {
+function changeTitle() {
+    let newTitle = sort_select.value;
+    sort_title.innerHTML = newTitle;
+}
+
+function reset() {
     randomArrays();
-    renderBars(quicksortNums, quicksortBars);
-    renderBars(heapsortNums, heapsortBars);
+    renderBars(nums, sort_bars);
+    console.log(nums.length);
+    changeTitle();
+}
+
+window.onload = function () {
+    reset();
 };
 
+sort_select.addEventListener("change", function () {
+    changeTitle();
+});
+
 sort_btn.addEventListener("click", async function () {
-    await quicksort(quicksortNums, 0, quicksortNums.length - 1, quicksortBars);
+    await quicksort(nums, 0, nums.length - 1, sort_bars);
 
-    let quicksortBarsChildren = quicksortBars.children;
+    let sortBarsChildren = sort_bars.children;
 
-    for (let bar of quicksortBarsChildren) {
+    for (let bar of sortBarsChildren) {
         bar.style.backgroundColor = "#0f141d";
     }
 
-    await heapsort(heapsortNums, heapsortBars);
+    // await heapsort(heapsortNums, heapsortBars);
 
-    let heapsortBarsChildren = heapsortBars.children;
+    // let heapsortBarsChildren = heapsortBars.children;
 
-    for (let bar of heapsortBarsChildren) {
-        bar.style.backgroundColor = "#0f141d";
-    }
+    // for (let bar of heapsortBarsChildren) {
+    //     bar.style.backgroundColor = "#0f141d";
+    // }
 
     console.log("Arrays sorted");
+});
+
+reset_btn.addEventListener("click", function () {
+    nums = [];
+    window.location.reload();
 });

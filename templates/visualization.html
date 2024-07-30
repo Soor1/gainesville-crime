@@ -15,20 +15,21 @@
         </div>
         <div class="container">
             <div class="visualization_container">
-                <div class="box" id="quicksort_container">
-                    <h2>Quicksort Visualization</h2>
-                    <div class="bars_container" id="quicksort_bars"></div>
-                </div>
-                <div class="box" id="heapsort_container">
-                    <h2>Heapsort Visualization</h2>
-                    <div class="bars_container" id="heapsort_bars"></div>
+                <div class="box" id="sort_container">
+                    <h2 id="sort_title">Sorting Visualization</h2>
+                    <div class="bars_container" id="sort_bars"></div>
                 </div>
             </div>
             <div class="buttons_container">
-                <select name="speed" id="speed">
-                    <option value="100">Slow</option>
-                    <option value="50">Medium</option>
-                    <option value="10">Fast</option>
+                <button id="reset_btn">Reset</button>
+                <select name="sort_select" id="sort_select">
+                    <option>Quick Sort</option>
+                    <option>Heap Sort</option>
+                    <option>Shell Sort</option>
+                    <option>Merge Sort</option>
+                    <option>Bubble Sort</option>
+                    <option>Insertion Sort</option>
+                    <option>Selection Sort</option>
                 </select>
                 <button id="sort_btn">Sort</button>
             </div>
