@@ -13,7 +13,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
-var marker = L.marker([29.652, -82.325])
+var marker = L.marker([29.64200, -82.35600])
     .addTo(map)
     .bindPopup("University of Florida<br>Go Gators!")
     .openPopup();
@@ -47,7 +47,7 @@ map.on("click", function (e) {
     circle.setLatLng(e.latlng);
     document.getElementById("latitude").value = marker.getLatLng().lat.toFixed(5);
     document.getElementById("longitude").value = marker.getLatLng().lng.toFixed(5);
-    
+
 });
 
 function boundaryStyle(feature){return{fillColor:"#FA4616",fillOpacity:0.1,color:'#FA4616'};}
@@ -58,4 +58,3 @@ boundaryLayer.addTo(map);
 
 document.getElementById("latitude").value = marker.getLatLng().lat.toFixed(5);
 document.getElementById("longitude").value = marker.getLatLng().lng.toFixed(5);
-    
