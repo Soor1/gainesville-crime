@@ -30,6 +30,18 @@ radius.addEventListener("input", (e) => {
     circle.setRadius(e.target.value * 1609.344);
 });
 
+latitude.addEventListener("input", (e) => {
+    value.textContent = e.target.value;
+    marker.setLatLng([e.target.value, marker.getLatLng().lng]);
+    circle.setLatLng([e.target.value, marker.getLatLng().lng]);
+});
+
+longitude.addEventListener("input", (e) => {
+    value.textContent = e.target.value;
+    marker.setLatLng([marker.getLatLng().lat, e.target.value]);
+    circle.setLatLng([marker.getLatLng().lat, e.target.value]);
+});
+
 map.on("click", function (e) {
     marker.setLatLng(e.latlng);
     circle.setLatLng(e.latlng);
