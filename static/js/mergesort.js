@@ -1,39 +1,39 @@
-function merge(nums, start, middle, end) {
-    let ln = middle - start + 1;
-    let rn = end - middle;
-    let left = [];
-    let right = [];
+function merge(nums, left, middle, right) {
+    let n1 = middle - left + 1;
+    let n2 = right - middle;
+    let L = new Array(n1);
+    let R = new Array(n2);
 
-    for (let x = 0; x < ln; x++) {
-        left[x] = nums[start + x];
+    for (let x = 0; x < n1; x++) {
+        L[x] = nums[left + x];
     }
-    for (let y = 0; y < rn; y++) {
-        right[y] = nums[middle + 1 + y];
+    for (let y = 0; y < n2; y++) {
+        R[y] = nums[middle + 1 + y];
     }
 
     let i = 0;
     let j = 0;
-    let k = start;
+    let k = left;
 
-    while (i < ln && j < rn) {
-        if (left[i] <= right[j]) {
-            nums[k] = left[i];
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            nums[k] = L[i];
             i++;
         } else {
-            nums[k] = right[j];
+            nums[k] = R[j];
             j++;
         }
         k++;
     }
 
-    while (i < ln) {
-        nums[k] = left[i];
+    while (i < n1) {
+        nums[k] = L[i];
         i++;
         k++;
     }
 
-    while (j < rn) {
-        nums[k] = right[j];
+    while (j < n2) {
+        nums[k] = R[j];
         j++;
         k++;
     }
@@ -41,7 +41,7 @@ function merge(nums, start, middle, end) {
 
 function mergeSort(nums, start, end) {
     if (start < end) {
-        middle = (start + end) / 2;
+        let middle = Math.floor(start + (end - start) / 2);
         mergeSort(nums, start, middle);
         mergeSort(nums, middle + 1, end);
         merge(nums, start, middle, end);
