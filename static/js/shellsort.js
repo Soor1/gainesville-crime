@@ -1,4 +1,4 @@
-function shellsort(nums) {
+function shellSort(nums) {
     for (
         let gap = Math.floor(nums.length / 2);
         gap > 0;
@@ -6,7 +6,7 @@ function shellsort(nums) {
     ) {
         for (let x = gap; x < nums.length; x++) {
             let temp = nums[x];
-            let y = x;
+            let y;
             for (y = x; y >= gap && nums[y - gap] > temp; y -= gap) {
                 nums[y] = nums[y - gap];
             }

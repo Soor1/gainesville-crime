@@ -6,7 +6,7 @@ let sort_title = document.getElementById("sort_title");
 let numDataPoints = 200;
 let heightFactor = 400;
 let nums = [];
-let speedFactor = 20;
+let speedFactor = 10;
 
 function randomArrays() {
     for (let x = 0; x < numDataPoints; x++) {
@@ -123,6 +123,105 @@ async function insertionsort(nums, n, container) {
     }
 }
 
+async function merge(nums, left, middle, right, container) {
+    let n1 = middle - left + 1;
+    let n2 = right - middle;
+    let L = new Array(n1);
+    let R = new Array(n2);
+
+    for (let x = 0; x < n1; x++) {
+        L[x] = nums[left + x];
+    }
+    for (let y = 0; y < n2; y++) {
+        R[y] = nums[middle + 1 + y];
+    }
+
+    let i = 0;
+    let j = 0;
+    let k = left;
+
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            nums[k] = L[i];
+            i++;
+        } else {
+            nums[k] = R[j];
+            j++;
+        }
+        k++;
+        renderBars(nums, container);
+        await sleep(speedFactor);
+    }
+
+    while (i < n1) {
+        nums[k] = L[i];
+        i++;
+        k++;
+        renderBars(nums, container);
+        await sleep(speedFactor);
+    }
+
+    while (j < n2) {
+        nums[k] = R[j];
+        j++;
+        k++;
+        renderBars(nums, container);
+        await sleep(speedFactor);
+    }
+}
+
+async function mergesort(nums, start, end, container) {
+    if (start < end) {
+        let middle = Math.floor(start + (end - start) / 2);
+        await mergesort(nums, start, middle, container);
+        await mergesort(nums, middle + 1, end, container);
+        await merge(nums, start, middle, end, container);
+    }
+}
+
+async function swap(nums, minIdx, currIdx, container) {
+    let temp = nums[minIdx];
+    nums[minIdx] = nums[currIdx];
+    nums[currIdx] = temp;
+    renderBars(nums, container);
+    await sleep(speedFactor);
+}
+
+async function selectionsort(nums, n, container) {
+    for (let x = 0; x < n - 1; x++) {
+        let minIdx = x;
+        for (let y = x + 1; y < n; y++) {
+            if (nums[y] < nums[minIdx]) {
+                minIdx = y;
+            }
+            renderBars(nums, container);
+            await sleep(speedFactor);
+        }
+        if (minIdx !== x) {
+            await swap(nums, minIdx, x, container);
+        }
+    }
+}
+
+async function shellsort(nums, container) {
+    for (
+        let gap = Math.floor(nums.length / 2);
+        gap > 0;
+        gap = Math.floor(gap / 2)
+    ) {
+        for (let x = gap; x < nums.length; x++) {
+            let temp = nums[x];
+            let y;
+            for (y = x; y >= gap && nums[y - gap] > temp; y -= gap) {
+                nums[y] = nums[y - gap];
+            }
+            nums[y] = temp;
+            renderBars(nums, container);
+            await sleep(speedFactor);
+        }
+    }
+}
+
 function changeTitle() {
     let newTitle = sort_select.value;
     sort_title.innerHTML = newTitle;
@@ -152,9 +251,13 @@ sort_btn.addEventListener("click", async function () {
     } else if (sort_select.value === "Heap Sort") {
         await heapsort(nums, sort_bars);
     } else if (sort_select.value === "Merge Sort") {
-        await mergesort(nums, sort_bars);
+        await mergesort(nums, 0, nums.length - 1, sort_bars);
     } else if (sort_select.value == "Insertion Sort") {
         await insertionsort(nums, nums.length, sort_bars);
+    } else if (sort_select.value == "Selection Sort") {
+        await selectionsort(nums, nums.length, sort_bars);
+    } else if (sort_select.value == "Shell Sort") {
+        await shellsort(nums, sort_bars);
     }
 
     let sortBarsChildren = sort_bars.children;
