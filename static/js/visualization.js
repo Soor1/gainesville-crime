@@ -6,7 +6,7 @@ let sort_title = document.getElementById("sort_title");
 let numDataPoints = 200;
 let heightFactor = 400;
 let nums = [];
-let speedFactor = 50;
+let speedFactor = 20;
 
 function randomArrays() {
     for (let x = 0; x < numDataPoints; x++) {
@@ -96,6 +96,33 @@ async function heapsort(nums, container) {
     }
 }
 
+async function bubblesort(nums, n, container) {
+    for (let x = 0; x < n - 1; x++) {
+        for (let y = 0; y < n - x - 1; y++) {
+            if (nums[y] > nums[y + 1]) {
+                [nums[y], nums[y + 1]] = [nums[y + 1], nums[y]];
+                renderBars(nums, container);
+                await sleep(speedFactor);
+            }
+        }
+    }
+}
+
+async function insertionsort(nums, n, container) {
+    for (let x = 0; x < n; x++) {
+        let key = nums[x];
+        let y = x - 1;
+
+        while (y >= 0 && nums[y] > key) {
+            nums[y + 1] = nums[y];
+            y = y - 1;
+            renderBars(nums, container);
+            await sleep(speedFactor);
+        }
+        nums[y + 1] = key;
+    }
+}
+
 function changeTitle() {
     let newTitle = sort_select.value;
     sort_title.innerHTML = newTitle;
@@ -114,24 +141,27 @@ window.onload = function () {
 
 sort_select.addEventListener("change", function () {
     changeTitle();
+    window.location.reload();
 });
 
 sort_btn.addEventListener("click", async function () {
-    await quicksort(nums, 0, nums.length - 1, sort_bars);
+    if (sort_select.value === "Bubble Sort") {
+        await bubblesort(nums, nums.length, sort_bars);
+    } else if (sort_select.value === "Quick Sort") {
+        await quicksort(nums, 0, nums.length - 1, sort_bars);
+    } else if (sort_select.value === "Heap Sort") {
+        await heapsort(nums, sort_bars);
+    } else if (sort_select.value === "Merge Sort") {
+        await mergesort(nums, sort_bars);
+    } else if (sort_select.value == "Insertion Sort") {
+        await insertionsort(nums, nums.length, sort_bars);
+    }
 
     let sortBarsChildren = sort_bars.children;
 
     for (let bar of sortBarsChildren) {
         bar.style.backgroundColor = "#0f141d";
     }
-
-    // await heapsort(heapsortNums, heapsortBars);
-
-    // let heapsortBarsChildren = heapsortBars.children;
-
-    // for (let bar of heapsortBarsChildren) {
-    //     bar.style.backgroundColor = "#0f141d";
-    // }
 
     console.log("Arrays sorted");
 });
