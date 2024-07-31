@@ -33,6 +33,9 @@ radius.addEventListener("input", (e) => {
 map.on("click", function (e) {
     marker.setLatLng(e.latlng);
     circle.setLatLng(e.latlng);
+    document.getElementById("latitude").value = marker.getLatLng().lat.toFixed(5);
+    document.getElementById("longitude").value = marker.getLatLng().lng.toFixed(5);
+    
 });
 
 function boundaryStyle(feature){return{fillColor:"#FA4616",fillOpacity:0.1,color:'#FA4616'};}
@@ -40,4 +43,7 @@ function boundaryStyle(feature){return{fillColor:"#FA4616",fillOpacity:0.1,color
 L.geoJSON(gnvPolygon,{style:boundaryStyle});
 var boundaryLayer=new L.geoJSON(gnvPolygon,{style:boundaryStyle});
 boundaryLayer.addTo(map);
+
+document.getElementById("latitude").value = marker.getLatLng().lat.toFixed(5);
+document.getElementById("longitude").value = marker.getLatLng().lng.toFixed(5);
     
