@@ -1,7 +1,35 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>HTML 5 Boilerplate</title>
+        <link rel="stylesheet" href="../static/css/about.css" />
     </head>
-    <h1>Soor, Blake, and Ethan</h1>
+    <body>
+        <div id="header">
+            <a href="{{ url_for('index') }}" id="index-link">Home</a>
+            <h1 id="title">About Us</h1>
+            <a href="{{ url_for('visualization') }}" id="time-complexity-link"
+                >Complexity Visualization</a
+            >
+        </div>
+        <div id="content" class="box">
+            <p>
+                This website was created by Soor Hansalia, Blake Crawford, and Ethan Krol for our
+                Data Structures and Algorithms Course. We are students at the University
+                of Florida.
+            </p>
+            <p>
+                Our website is designed to help users visualize crime data in
+                Gainesville, Florida. Users can input a latitude and longitude
+                and a radius to see the crimes that have occurred in that area.
+            </p>
+            <p>
+                We also have a time complexity visualization page where users
+                can see how different sorting algorithms work.
+            </p>
+        <!-- <script src="index.js"></script> -->
+    </body>
 </html>
