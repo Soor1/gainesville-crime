@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+html{
+    overflow: hidden;
+}
+
 body {
     font-family: "Open Sans", sans-serif;
     background: #8D99AE;
@@ -12,7 +16,10 @@ body {
     height: 90vh;
 }
 
-.box{
+#entry-fields-container {
+    overflow: hidden;
+    background: #EDF2F4;
+    border-width: 7px;
     position: absolute;
     box-sizing: border-box;
     left: 7vw;
@@ -20,13 +27,9 @@ body {
     z-index: 2;
     border: 7px solid #0F141D;
     border-radius: 20px;
-    height: 70vh;
+    height: 10vh;
     width: 40vw;
-}
-
-#entry-fields-container {
-    background: #EDF2F4;
-    border-width: 7px;
+    transition: height 1s ease;
 }
 
 #map {
@@ -58,6 +61,16 @@ body {
 
 #title {
     margin: 0;
+    text-align: center;
+}
+
+#non-address-inputs{
+    display: block;
+    transition: display 1s ease;
+}
+
+#address-container{
+    margin: 30px auto;
     text-align: center;
 }
 

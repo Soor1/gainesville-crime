@@ -57,7 +57,7 @@ boundaryLayer.addTo(map);
 document.getElementById("latitude").value = marker.getLatLng().lat.toFixed(5);
 document.getElementById("longitude").value = marker.getLatLng().lng.toFixed(5);
 
-// Start of moving box logic
+// Start of draggable box
 let inputBox = document.querySelector("#entry-fields-container");
 let offsetX, offsetY, isDragging = false;
 
@@ -88,5 +88,22 @@ document.addEventListener("mousemove", function(event) {
 document.addEventListener("mouseup", function() {
     isDragging = false;
 });
+// End of the draggable box logic
+
+// Logic for increasing/decreasing field selection
+let increaseButton = document.querySelector("#address-button");
+let nonAddressFields = document.querySelector("#non-address-inputs");
+let increase = true;
+
+increaseButton.addEventListener("click", (event) => {
+    if (increase) {
+        increase = false;
+        inputBox.style.height = "70vh";
+    }
+    else{
+        increase = true;
+        inputBox.style.height = "10vh";
+    }
+})
 
 
