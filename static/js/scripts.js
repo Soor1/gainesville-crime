@@ -31,13 +31,11 @@ radius.addEventListener("input", (e) => {
 });
 
 latitude.addEventListener("input", (e) => {
-    value.textContent = e.target.value;
     marker.setLatLng([e.target.value, marker.getLatLng().lng]);
     circle.setLatLng([e.target.value, marker.getLatLng().lng]);
 });
 
 longitude.addEventListener("input", (e) => {
-    value.textContent = e.target.value;
     marker.setLatLng([marker.getLatLng().lat, e.target.value]);
     circle.setLatLng([marker.getLatLng().lat, e.target.value]);
 });
