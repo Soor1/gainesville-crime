@@ -94,22 +94,6 @@ boundaryLayer.addTo(map);
 document.getElementById("latitude").value = marker.getLatLng().lat.toFixed(5);
 document.getElementById("longitude").value = marker.getLatLng().lng.toFixed(5);
 
-// Logic for increasing/decreasing field selection
-let increaseButton = document.querySelector("#address-button");
-let nonAddressFields = document.querySelector("#non-address-inputs");
-let increase = true;
-
-increaseButton.addEventListener("click", (event) => {
-    if (increase) {
-        increase = false;
-        inputBox.style.height = "70vh";
-    }
-    else{
-        increase = true;
-        inputBox.style.height = "10vh";
-    }
-})
-
 // Logic for top-left buttons
 let helpButton = document.querySelector("#btn1");
 let snapButton = document.querySelector("#btn2");

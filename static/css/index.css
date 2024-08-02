@@ -20,18 +20,65 @@ body {
 
 #entry-fields-container {
     overflow: hidden;
-    background: #edf2f4;
+    background: white;
     border-width: 0px;
     position: absolute;
     box-sizing: border-box;
     right: -40vw;
     top: 10vh;
-    z-index: 2;
-    border: 10px solid #0f141d;
+    z-index: 1001;
+    border: 10px solid rgb(0,33,165);
+    box-shadow: 0 2px 5px 0 black;
     border-radius: 0px;
     height: 90vh;
     width: 34vw;
     transition: right 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: baseline;
+    gap: 3vh;
+}
+
+.double-input-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.double-input-container > div{
+    width: 48%;
+}
+
+#entry-fields-container > div{
+    width: 80%
+}
+
+#entry-fields-container h1{
+    margin: 3vh auto 0 auto;
+    color: rgb(0,33,165);
+}
+
+#entry-fields-container label{
+    font-size: 2vh;
+    font-weight: 500;
+    color: rgb(0,33,165);
+}
+
+#entry-fields-container input {
+    font-size: 2.5vh;
+    font-family: Helvetica;
+    margin: .5vh 0;
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1.5px solid lightgray;
+    transition: border-bottom .5s ease;
+}
+
+#entry-fields-container input:focus {
+    outline: none;
+    border-bottom: 1.5px solid black;
 }
 
 body.menu-open #entry-fields-container {
@@ -98,21 +145,6 @@ body.menu-open #map {
     text-align: center;
 }
 
-#menu-toggle {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 30px;
-    background: #0f141d;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    z-index: 1000;
-}
-
 #non-address-inputs {
     display: block;
     transition: display 1s ease;
@@ -128,10 +160,33 @@ body.menu-open #map {
     display: flex;
 }
 
+#menu-toggle {
+    z-index: 1000;
+    height: fit-content;
+    width: fit-content;
+    margin: 2vh .5vw 2vh auto;
+    padding: 15px;
+    border: none;
+    font-size: 1vw;
+    font-weight: 600;
+    font-family: Helvetica;
+    color: white;
+    background: rgba(0,33,165, .8);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.7);
+    border-radius: 25px;
+    transition: transform .5s ease;
+}
+
+#menu-toggle:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
 .top-left-buttons{
     z-index: 1000;
     height: fit-content;
     width: fit-content;
+    min-width: calc(2vw + 15px);
     margin: 2vh .5vw;
     padding: 15px;
     border: none;
@@ -148,10 +203,6 @@ body.menu-open #map {
 .top-left-buttons:hover{
     cursor: pointer;
     transform: scale(1.05);
-}
-
-.top-left-buttons:active{
-    transform: scale(0.952);
 }
 
 
