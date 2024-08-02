@@ -16,6 +16,40 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
+map.removeControl(map.zoomControl);
+L.Control.CustomZoom = L.Control.extend({
+    onAdd: function(map) {
+        var container = L.DomUtil.create('div', 'custom-zoom-control leaflet-bar');
+        var zoomInButton = L.DomUtil.create('button', '', container);
+        var zoomOutButton = L.DomUtil.create('button', '', container);
+
+        zoomInButton.innerHTML = '+';
+        zoomOutButton.innerHTML = '-';
+
+        L.DomEvent.on(zoomInButton, 'click', function() {
+            map.zoomIn();
+        });
+
+        L.DomEvent.on(zoomOutButton, 'click', function() {
+            map.zoomOut();
+        });
+
+        L.DomEvent.disableClickPropagation(container);
+        L.DomEvent.disableScrollPropagation(container);
+
+        return container;
+    },
+
+    onRemove: function(map) {
+    }
+});
+
+L.control.customZoom = function(opts) {
+    return new L.Control.CustomZoom(opts);
+}
+
+L.control.customZoom({ position: 'bottomleft' }).addTo(map);
+
 let marker = L.marker([29.64200, -82.35600])
     .addTo(map)
     .bindPopup("University of Florida<br>Go Gators!")
@@ -60,39 +94,6 @@ boundaryLayer.addTo(map);
 document.getElementById("latitude").value = marker.getLatLng().lat.toFixed(5);
 document.getElementById("longitude").value = marker.getLatLng().lng.toFixed(5);
 
-// Start of draggable box
-let inputBox = document.querySelector("#entry-fields-container");
-let offsetX, offsetY, isDragging = false;
-
-inputBox.addEventListener("mousedown", (event) => {
-
-    let rect = inputBox.getBoundingClientRect();
-    let borderThickness = 7;
-    let borderClicked = event.clientX <= rect.left + borderThickness || event.clientX >= rect.right - borderThickness ||
-                        event.clientY <= rect.top + borderThickness || event.clientY >= rect.bottom - borderThickness;
-
-    if (borderClicked) {
-      isDragging = true;
-      offsetX = event.clientX - inputBox.offsetLeft;
-      offsetY = event.clientY - inputBox.offsetTop;
-      event.preventDefault();
-    }
-});
-
-document.addEventListener("mousemove", function(event) {
-    if (isDragging) {
-        var x = event.clientX - offsetX;
-        var y = event.clientY - offsetY;
-        inputBox.style.left = `${x}px`;
-        inputBox.style.top = `${y}px`;
-    }
-});
-
-document.addEventListener("mouseup", function() {
-    isDragging = false;
-});
-// End of the draggable box logic
-
 // Logic for increasing/decreasing field selection
 let increaseButton = document.querySelector("#address-button");
 let nonAddressFields = document.querySelector("#non-address-inputs");
@@ -108,3 +109,29 @@ increaseButton.addEventListener("click", (event) => {
         inputBox.style.height = "10vh";
     }
 })
+
+// Logic for top-left buttons
+let helpButton = document.querySelector("#btn1");
+let snapButton = document.querySelector("#btn2");
+let aedButton = document.querySelector("#btn3");
+let bpButton = document.querySelector("#btn4");
+
+helpButton.addEventListener('click', function(event) {
+    event.stopPropagation(); 
+    event.preventDefault();
+});
+
+snapButton.addEventListener('click', function(event) {
+    event.stopPropagation(); 
+    event.preventDefault();
+});
+
+aedButton.addEventListener('click', function(event) {
+    event.stopPropagation(); 
+    event.preventDefault();
+});
+
+bpButton.addEventListener('click', function(event) {
+    event.stopPropagation(); 
+    event.preventDefault();
+});

@@ -8,20 +8,14 @@
             integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
             crossorigin=""
         />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-            rel="stylesheet"
-        />
         <link rel="stylesheet" href="../static/css/index.css" />
     </head>
     <body>
         <div id="header">
-            <a href="{{ url_for('about') }}" id="about-link">About</a>
             <h1 id="title">Gainesville Crime</h1>
-            <a href="{{ url_for('visualization') }}" id="time-complexity-link"
-                >Complexity Visualization</a
-            >
-            <button id="menu-toggle">☰</button>
+            <a href="{{ url_for('about') }}" id="about-link">About</a>
+            <a href="{{ url_for('visualization') }}" id="time-complexity-link">Complexity Visualization</a>
+            <img src="../static/resources/UFLogo.png" id="uf-logo" alt="UF Logo"/>
         </div>
         <div id="map-and-input-container">
             <div id="entry-fields-container" class="box">
@@ -101,7 +95,13 @@
                     </div>
                 </div>
             </div>
-            <div id="map"></div>
+            <div id="map">
+                <button id="btn1" class="top-left-buttons">Help</button>
+                <button id="btn2" class="top-left-buttons">SNAP</button>
+                <button id="btn3" class="top-left-buttons">AED</button>
+                <button id="btn4" class="top-left-buttons">Blue Phone</button>
+                <button id="menu-toggle">☰</button>
+            </div>
         </div>
         <script
             src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"

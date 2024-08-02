@@ -57,27 +57,44 @@ body.menu-open #map {
 #header {
     height: 10vh;
     width: 100%;
-    background-color: #0f141d;
+    background: linear-gradient(to right, rgb(0,33,165) 60%, rgb(203, 199, 252) 100%);
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: baseline;
     gap: 0;
     align-items: center;
     color: #ffffff;
     position: relative;
+    box-shadow: 0 2px 5px 0 black;
+    z-index: 1000;
+}
+
+#uf-logo{
+    margin-left: auto;
+    margin-right: 2vh;
+    height: 80%;
 }
 
 #about-link,
 #time-complexity-link {
     text-decoration: none;
-    font-weight: 700;
-    color: #ffffff;
+    font-weight: 500;
+    color: #cfcfcf;
     padding: 10px;
     text-align: center;
+    margin: 0 .75vw 0 .75vw;
+    transition: color .75s ease, transform .75s ease, text-decoration .75s ease;
+}
+
+#about-link:hover,
+#time-complexity-link:hover {
+    color: white;
+    transform: scale(1.05);
+    text-decoration: underline;
 }
 
 #title {
-    margin: 0;
+    margin: 0 1.75vw .5vh 2vw;
     text-align: center;
 }
 
@@ -93,6 +110,7 @@ body.menu-open #map {
     border: none;
     padding: 10px;
     border-radius: 5px;
+    z-index: 1000;
 }
 
 #non-address-inputs {
@@ -103,6 +121,76 @@ body.menu-open #map {
 #address-container {
     margin: 30px auto;
     text-align: center;
+}
+
+#map{
+    z-index: 1;
+    display: flex;
+}
+
+.top-left-buttons{
+    z-index: 1000;
+    height: fit-content;
+    width: fit-content;
+    margin: 2vh .5vw;
+    padding: 15px;
+    border: none;
+    font-size: 1vw;
+    font-weight: 600;
+    font-family: Helvetica;
+    color: white;
+    background: rgba(0,33,165, .8);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.7);
+    border-radius: 25px;
+    transition: transform .5s ease;
+}
+
+.top-left-buttons:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.top-left-buttons:active{
+    transform: scale(0.952);
+}
+
+
+.custom-zoom-control {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 25px;
+    color: white;
+    background: rgba(0,33,165, .8);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.7);
+    height: fit-content;
+    width: fit-content;
+}
+.custom-zoom-control button {
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    font-size: 2vw;
+    font-weight: 600;
+    font-family: Helvetica;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    transition: transform .4s ease;
+}
+.custom-zoom-control button:hover {
+    transform: scale(1.15);
+}
+
+.custom-zoom-control button:active {
+    color: lightgray;
+    transform: scale(0.87);
 }
 
 @media (max-width: 800px) {
