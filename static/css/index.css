@@ -21,16 +21,16 @@ body {
 #entry-fields-container {
     overflow: hidden;
     background: #edf2f4;
-    border-width: 7px;
+    border-width: 0px;
     position: absolute;
     box-sizing: border-box;
     right: -40vw;
     top: 10vh;
     z-index: 2;
-    border: 7px solid #0f141d;
-    border-radius: 20px;
+    border: 10px solid #0f141d;
+    border-radius: 0px;
     height: 90vh;
-    width: 33vw;
+    width: 34vw;
     transition: right 0.3s ease;
 }
 
