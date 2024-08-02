@@ -1,5 +1,8 @@
 const value = document.querySelector("#value");
 const radius = document.querySelector("#radius");
+let aeds = document.querySelector("#Aeds");
+let phones = document.querySelector("#Phones");
+let snap = document.querySelector("#Snap");
 
 value.textContent = radius.value;
 

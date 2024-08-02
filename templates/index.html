@@ -42,9 +42,9 @@
                             id="latitude"
                             step="0.00001"
                             placeholder="Enter latitude"
-                            value = "value"
-                            max = "29.8"
-                            min = "29.6"
+                            value="value"
+                            max="29.8"
+                            min="29.6"
                         />
                         <label for="longitude">Longitude:</label>
                         <input
@@ -52,7 +52,7 @@
                             id="longitude"
                             step="0.00001"
                             placeholder="Enter longitude"
-                            value = "value"
+                            value="value"
                         />
                     </div>
 
@@ -64,11 +64,12 @@
                             min="0"
                             max="10"
                             step="0.1"
-                            value="1"x
+                            value="1"
+                            x
                         />
                         <label for="radius"
-                            >Radius: <output id="value"></output
-                        > mi</label>
+                            >Radius: <output id="value"></output> mi</label
+                        >
                     </div>
 
                     <div class="input-container">
@@ -82,12 +83,20 @@
                         <label for="k">K</label>
                         <input type="number" />
                     </div>
+
                     <div class="input-container">
-                        <label for="k"
-                            >Should have 3 check boxes to allow users to display
-                            aeds, blue phones, and snap stops if they want</label
-                        >
-                        <input type="number" />
+                        <label>
+                            <input type="checkbox" name="AED" value="1" />
+                            Display AEDs
+                        </label>
+                        <label>
+                            <input type="checkbox" name="Phones" value="2" />
+                            Display Blue Phones
+                        </label>
+                        <label>
+                            <input type="checkbox" name="Snap" value="3" />
+                            Display SNAP Stops
+                        </label>
                     </div>
                 </div>
             </div>

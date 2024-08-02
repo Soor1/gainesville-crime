@@ -3,13 +3,13 @@
     padding: 0;
 }
 
-html{
+html {
     overflow: hidden;
 }
 
 body {
     font-family: "Open Sans", sans-serif;
-    background: #8D99AE;
+    background: #8d99ae;
 }
 
 #box-container {
@@ -18,14 +18,14 @@ body {
 
 #entry-fields-container {
     overflow: hidden;
-    background: #EDF2F4;
+    background: #edf2f4;
     border-width: 7px;
     position: absolute;
     box-sizing: border-box;
     left: 7vw;
     top: 13vh;
     z-index: 2;
-    border: 7px solid #0F141D;
+    border: 7px solid #0f141d;
     border-radius: 20px;
     height: 10vh;
     width: 40vw;
@@ -41,7 +41,7 @@ body {
 #header {
     height: 10vh;
     width: 100%;
-    background-color: #0F141D;
+    background-color: #0f141d;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -50,12 +50,13 @@ body {
     color: #ffffff;
 }
 
-#about-link, #time-complexity-link {
+#about-link,
+#time-complexity-link {
     text-decoration: none;
     font-weight: 700;
-    color: #ffffff;; /* Adjust color as needed */
+    color: #ffffff; /* Adjust color as needed */
     padding: 10px;
-    width:  20vw;
+    width: 20vw;
     text-align: center;
 }
 
@@ -64,18 +65,22 @@ body {
     text-align: center;
 }
 
-#non-address-inputs{
+#non-address-inputs {
     display: block;
     transition: display 1s ease;
 }
 
-#address-container{
+#address-container {
     margin: 30px auto;
     text-align: center;
 }
 
-@media (max-width: 800px) {
+/* #entry-fields-container > * {
+    display: inline-block;
+    margin: 10px;
+} */
 
+@media (max-width: 800px) {
     #header > * {
         font-size: 30px;
         max-height: 100%;

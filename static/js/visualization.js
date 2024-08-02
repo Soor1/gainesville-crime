@@ -3,10 +3,10 @@ let reset_btn = document.getElementById("reset_btn");
 let sort_bars = document.getElementById("sort_bars");
 let sort_select = document.getElementById("sort_select");
 let sort_title = document.getElementById("sort_title");
-let numDataPoints = 200;
+let numDataPoints = 500;
 let heightFactor = 400;
 let nums = [];
-let speedFactor = 10;
+let speedFactor = 20;
 
 function randomArrays() {
     for (let x = 0; x < numDataPoints; x++) {
