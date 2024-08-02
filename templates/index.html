@@ -21,6 +21,7 @@
             <a href="{{ url_for('visualization') }}" id="time-complexity-link"
                 >Complexity Visualization</a
             >
+            <button id="menu-toggle">☰</button>
         </div>
         <div id="map-and-input-container">
             <div id="entry-fields-container" class="box">
@@ -108,5 +109,12 @@
             crossorigin=""
         ></script>
         <script src="../static/js/scripts.js"></script>
+        <script>
+            document
+                .getElementById("menu-toggle")
+                .addEventListener("click", function () {
+                    document.body.classList.toggle("menu-open");
+                });
+        </script>
     </body>
 </html>

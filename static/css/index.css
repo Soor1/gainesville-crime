@@ -10,6 +10,8 @@ html {
 body {
     font-family: "Open Sans", sans-serif;
     background: #8d99ae;
+    display: flex;
+    flex-direction: column;
 }
 
 #box-container {
@@ -22,20 +24,34 @@ body {
     border-width: 7px;
     position: absolute;
     box-sizing: border-box;
-    left: 7vw;
-    top: 13vh;
+    right: -40vw;
+    top: 10vh;
     z-index: 2;
     border: 7px solid #0f141d;
     border-radius: 20px;
-    height: 10vh;
-    width: 40vw;
-    transition: height 1s ease;
+    height: 90vh;
+    width: 33vw;
+    transition: right 0.3s ease;
+}
+
+body.menu-open #entry-fields-container {
+    right: 0;
+}
+
+#map-and-input-container {
+    display: flex;
+    width: 100%;
+}
+
+body.menu-open #map {
+    width: 66vw;
 }
 
 #map {
     height: 90vh;
     width: 100vw;
     z-index: 1;
+    transition: width 0.3s ease;
 }
 
 #header {
@@ -48,21 +64,35 @@ body {
     gap: 0;
     align-items: center;
     color: #ffffff;
+    position: relative;
 }
 
 #about-link,
 #time-complexity-link {
     text-decoration: none;
     font-weight: 700;
-    color: #ffffff; /* Adjust color as needed */
+    color: #ffffff;
     padding: 10px;
-    width: 20vw;
     text-align: center;
 }
 
 #title {
     margin: 0;
     text-align: center;
+}
+
+#menu-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 30px;
+    background: #0f141d;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 #non-address-inputs {
@@ -74,11 +104,6 @@ body {
     margin: 30px auto;
     text-align: center;
 }
-
-/* #entry-fields-container > * {
-    display: inline-block;
-    margin: 10px;
-} */
 
 @media (max-width: 800px) {
     #header > * {
