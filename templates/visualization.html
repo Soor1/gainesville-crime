@@ -9,9 +9,14 @@
     </head>
     <body>
         <div id="header">
-            <a href="{{ url_for('about') }}" id="about-link">About</a>
             <h1 id="title">Time Complexity Visualization</h1>
+            <a href="{{ url_for('about') }}" id="about-link">About</a>
             <a href="{{ url_for('index') }}" id="index-link">Home</a>
+            <img
+                src="../static/resources/UFLogo.png"
+                id="uf-logo"
+                alt="UF Logo"
+            />
         </div>
         <div class="container">
             <div class="visualization_container">
