@@ -1,6 +1,13 @@
 from flask import Flask, render_template
+import json
 
 app = Flask(__name__)
+
+@app.route('/snap')
+def getSnap():
+    with open('db/snap_stops.json') as f:
+        data = json.load(f)
+    return data
 
 @app.route('/')
 def index():

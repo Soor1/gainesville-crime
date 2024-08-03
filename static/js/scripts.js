@@ -100,22 +100,38 @@ let snapButton = document.querySelector("#btn2");
 let aedButton = document.querySelector("#btn3");
 let bpButton = document.querySelector("#btn4");
 
+async function fetchSnap() {
+    const response = await fetch('/snap');
+    const jsonData = await response.json();
+    console.log("sdf");
+    return jsonData;
+}
+
+function disSnap(data) {
+    for (let x of data[0]) {
+        console.log(typeof data[0][x]);
+    }
+}
+
 helpButton.addEventListener('click', function(event) {
-    event.stopPropagation(); 
+    event.stopPropagation();
     event.preventDefault();
 });
 
-snapButton.addEventListener('click', function(event) {
-    event.stopPropagation(); 
+snapButton.addEventListener('click', async function () {
+    event.stopPropagation();
     event.preventDefault();
+    console.log("snap clicked");
+    const jsonData = await fetchSnap();
+    disSnap(jsonData);
 });
 
 aedButton.addEventListener('click', function(event) {
-    event.stopPropagation(); 
+    event.stopPropagation();
     event.preventDefault();
 });
 
 bpButton.addEventListener('click', function(event) {
-    event.stopPropagation(); 
+    event.stopPropagation();
     event.preventDefault();
 });
