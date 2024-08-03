@@ -135,3 +135,9 @@ bpButton.addEventListener('click', function(event) {
     event.stopPropagation();
     event.preventDefault();
 });
+
+let filterButton = document.getDocumentById("filter-button");
+filterButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    var startTime = document.getElementById("start-time").value;
+})
