@@ -136,8 +136,26 @@ bpButton.addEventListener('click', function(event) {
     event.preventDefault();
 });
 
-let filterButton = document.getDocumentById("filter-button");
+let filterButton = document.getElementById("filter-button");
 filterButton.addEventListener("click", (event) => {
+    console.log("filter button clicked");
     event.preventDefault();
-    var startTime = document.getElementById("start-time").value;
-})
+    var searchStartTime = document.getElementById("start-time").value;
+    var searchEndTime = document.getElementById("end-time").value;  
+    var searchLatitude = document.getElementById("latitude").value;
+    var searchLongitude = document.getElementById("longitude").value;
+    var searchRadius = document.getElementById("radius").value;
+
+    var dbSearchURL = '/api/crimes?start_time=${searchStartTime}&end_time=${searchEndTime}&latitude=${searchLatitude}&longitude=${searchLongitude}&radius=${searchRadius}';
+
+    fetch(dbSearchURL).then(response => response.json()).then(data => {
+        crimesList.innerHTML = "";
+
+        data.forEach(crime => {
+            var crimeItem = document.createElement("li");
+            crimeItem.textContent = crime.description;
+            crimesList.appendChild(crimeItem);
+        });
+    }).catch(error=>console.error('error fetching crime data', error));
+
+});

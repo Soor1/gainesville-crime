@@ -44,11 +44,11 @@ def visualization():
 
 @app.route('/api/crimes', methods=['GET'])
 def get_crimes():
-    start_time = request.args.get('start_time')
-    end_time = request.args.get('end_time')
-    latitude = float(request.args.get('latitude'))
-    longitude = float(request.args.get('longitude'))
-    radius = float(request.args.get('radius'))
+    start_time = request.args.get('searchStart_time')
+    end_time = request.args.get('searchEnd_time')
+    latitude = request.args.get('searchLatitude')
+    longitude = float(request.args.get('searchLongitude'))
+    radius = float(request.args.get('searchRadius'))
 
     conn = get_db()
     cursor = conn.cursor()
