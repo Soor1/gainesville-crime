@@ -14,7 +14,7 @@ def get_db():
     return g.db
 
 def haversine(lat1, lon1, lat2, lon2):
-    R = 3959  
+    R = 3959
 
     dlat = radians(lat2 - lat1)
     dlon = radians(lon2 - lon1)
@@ -27,6 +27,18 @@ def haversine(lat1, lon1, lat2, lon2):
 @app.route('/snap')
 def getSnap():
     with open('db/snap_stops.json') as f:
+        data = json.load(f)
+    return data
+
+@app.route('/aed')
+def getAed():
+    with open('db/aeds.json') as f:
+        data = json.load(f)
+    return data
+
+@app.route('/phone')
+def getOhone():
+    with open('db/blue_phones.json') as f:
         data = json.load(f)
     return data
 
@@ -52,20 +64,20 @@ def get_crimes():
 
     conn = get_db()
     cursor = conn.cursor()
-    
+
     start_time = datetime.strptime(start_time, '%H:%M').time()
     end_time = datetime.strptime(end_time, '%H:%M').time()
-    
+
     cursor.execute("SELECT * FROM incidents")
     rows = cursor.fetchall()
     conn.close()
-    
+
     filtered_crimes = []
     for row in rows:
         crime_time = datetime.strptime(row['Offense_Date'], '%Y-%m-%d %H:%M:%S').time()
         crime_lat = row['Latitude']
         crime_lon = row['Longitude']
-        
+
         if start_time <= crime_time <= end_time:
             distance = haversine(latitude, longitude, crime_lat, crime_lon)
             if distance <= radius:

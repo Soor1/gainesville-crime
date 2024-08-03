@@ -52,8 +52,8 @@ L.control.customZoom({ position: 'bottomleft' }).addTo(map);
 
 let marker = L.marker([29.64200, -82.35600])
     .addTo(map)
-    .bindPopup("University of Florida<br>Go Gators!")
-    .openPopup();
+    .bindPopup("University of Florida<br>Go Gators!");
+    // .openPopup();
 
 let circle = L.circle(marker.getLatLng(), {
     color: "blue",
@@ -100,16 +100,68 @@ let snapButton = document.querySelector("#btn2");
 let aedButton = document.querySelector("#btn3");
 let bpButton = document.querySelector("#btn4");
 
+let helpBool = false;
+let snapBool = false;
+let aedBool = false;
+let bpBool = false;
+
 async function fetchSnap() {
     const response = await fetch('/snap');
     const jsonData = await response.json();
-    console.log("sdf");
+    return jsonData;
+}
+
+async function fetchAed() {
+    const response = await fetch('/aed');
+    const jsonData = await response.json();
+    return jsonData;
+}
+
+async function fetchPhone() {
+    const response = await fetch('/phone');
+    const jsonData = await response.json();
     return jsonData;
 }
 
 function disSnap(data) {
-    for (let x of data[0]) {
-        console.log(typeof data[0][x]);
+    const features = data.features;
+
+    for (let feature of features) {
+        const coordinates = feature.geometry.coordinates;
+        const name = feature.properties.NAME;
+        let marker = L.marker([coordinates[1], coordinates[0]])
+            .addTo(map)
+            .bindPopup("Snap Location: " + name)
+            // .openPopup();
+        // console.log(coordinates);
+    }
+}
+
+function disAed(data) {
+    const features = data.features;
+
+    for (let feature of features) {
+        const coordinates = feature.geometry.coordinates;
+        const name = feature.properties.NAME;
+        let marker = L.marker([coordinates[1], coordinates[0]])
+            .addTo(map)
+            .bindPopup("AED Location: " + name)
+            // .openPopup();
+        // console.log(coordinates);
+    }
+}
+
+function disPhone(data) {
+    const features = data.features;
+
+    for (let feature of features) {
+        const coordinates = feature.geometry.coordinates;
+        const name = feature.properties.NAME;
+        let marker = L.marker([coordinates[1], coordinates[0]])
+            .addTo(map)
+            .bindPopup("Blue Phone Location: " + name)
+            // .openPopup();
+        // console.log(coordinates);
     }
 }
 
@@ -118,22 +170,67 @@ helpButton.addEventListener('click', function(event) {
     event.preventDefault();
 });
 
-snapButton.addEventListener('click', async function () {
+snapButton.addEventListener('click', async function (event) {
     event.stopPropagation();
     event.preventDefault();
     console.log("snap clicked");
-    const jsonData = await fetchSnap();
-    disSnap(jsonData);
+    snapBool = !snapBool;
+    if (snapBool) {
+        const jsonData = await fetchSnap();
+        disSnap(jsonData);
+    } else {
+        map.eachLayer(function (layer) {
+            if (layer instanceof L.Marker) {
+                map.removeLayer(layer);
+            }
+        });
+    }
+    let marker = L.marker([29.64200, -82.35600])
+        .addTo(map)
+        .bindPopup("University of Florida<br>Go Gators!")
+        // .openPopup();
 });
 
-aedButton.addEventListener('click', function(event) {
+aedButton.addEventListener('click', async function(event) {
     event.stopPropagation();
     event.preventDefault();
+    console.log("aed clicked");
+    aedBool = !aedBool;
+    if (aedBool) {
+        const jsonData = await fetchAed();
+        disAed(jsonData);
+    } else {
+        map.eachLayer(function (layer) {
+            if (layer instanceof L.Marker) {
+                map.removeLayer(layer);
+            }
+        });
+    }
+    let marker = L.marker([29.64200, -82.35600])
+        .addTo(map)
+        .bindPopup("University of Florida<br>Go Gators!")
+        // .openPopup();
 });
 
-bpButton.addEventListener('click', function(event) {
+bpButton.addEventListener('click', async function(event) {
     event.stopPropagation();
     event.preventDefault();
+    console.log("phone clicked");
+    bpBool = !bpBool;
+    if (bpBool) {
+        const jsonData = await fetchSnap();
+        disPhone(jsonData);
+    } else {
+        map.eachLayer(function (layer) {
+            if (layer instanceof L.Marker) {
+                map.removeLayer(layer);
+            }
+        });
+    }
+    let marker = L.marker([29.64200, -82.35600])
+        .addTo(map)
+        .bindPopup("University of Florida<br>Go Gators!")
+        // .openPopup();
 });
 
 let filterButton = document.getElementById("filter-button");
@@ -141,7 +238,7 @@ filterButton.addEventListener("click", (event) => {
     console.log("filter button clicked");
     event.preventDefault();
     var searchStartTime = document.getElementById("start-time").value;
-    var searchEndTime = document.getElementById("end-time").value;  
+    var searchEndTime = document.getElementById("end-time").value;
     var searchLatitude = document.getElementById("latitude").value;
     var searchLongitude = document.getElementById("longitude").value;
     var searchRadius = document.getElementById("radius").value;
