@@ -29,14 +29,14 @@
                     />
                 </div>
 
-                <div class="input-container">
+                <!-- <div class="input-container">
                     <label for="zip">Zipcode</label>
                     <input
                         type="text"
                         id="zip"
                         placeholder="Enter Zipcode"
                     />
-                </div>
+                </div> -->
 
                 <div class="double-input-container">
                     <div>
@@ -117,13 +117,24 @@
         ></script>
         <script src="../static/js/scripts.js"></script>
         <script>
-            document
-                .getElementById("menu-toggle")
-                .addEventListener("click", function (event) {
-                    event.stopPropagation(); 
-                    event.preventDefault();
-                    document.body.classList.toggle("menu-open");
-                });
+            let menuToggle = document.getElementById("menu-toggle");
+            menuToggle.addEventListener("click", function (event) {
+                event.stopPropagation(); 
+                event.preventDefault();
+                document.body.classList.toggle("menu-open");
+            });
+            menuToggle.addEventListener('mousedown', function() {
+                this.style.transform='scale(0.9)';
+            });
+            menuToggle.addEventListener('mouseup', function() {
+                this.style.transform='scale(1.15)';
+            });
+            menuToggle.addEventListener('mouseenter', function() {
+                this.style.transform='scale(1.15)';
+            })
+            menuToggle.addEventListener('mouseleave', function() {
+                this.style.transform='scale(1)';
+            })
         </script>
     </body>
 </html>

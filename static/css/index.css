@@ -164,6 +164,7 @@ body.menu-open #map {
     z-index: 1000;
     height: fit-content;
     width: fit-content;
+    min-width: calc(2vw + 15px);
     margin: 2vh .5vw 2vh auto;
     padding: 15px;
     border: none;
@@ -197,12 +198,15 @@ body.menu-open #map {
     background: rgba(0,33,165, .8);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.7);
     border-radius: 25px;
-    transition: transform .5s ease;
+    transition: transform .4s ease;
+    transform: scale(1);
 }
 
-.top-left-buttons:hover{
-    cursor: pointer;
-    transform: scale(1.05);
+.top-left-buttons-clicked{
+    padding: 11px;
+    background: rgba(255, 255, 255, .8);
+    color: rgb(0,33,165);
+    border: 4px solid rgba(0,33,165, .8);
 }
 
 
