@@ -14,27 +14,45 @@ body {
 #header {
     height: 10vh;
     width: 100%;
-    background-color: #0f141d;
+    background: linear-gradient(to right, rgb(0,33,165) 60%, rgb(203, 199, 252) 100%);
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: baseline;
+    gap: 0;
     align-items: center;
     color: #ffffff;
+    position: relative;
+    box-shadow: 0 2px 5px 0 black;
+    z-index: 1000;
+}
+
+#uf-logo{
+    margin-left: auto;
+    margin-right: 2vh;
+    height: 80%;
 }
 
 #index-link,
 #time-complexity-link {
     text-decoration: none;
-    font-weight: 700;
-    color: #ffffff;
+    font-weight: 500;
+    color: #cfcfcf;
     padding: 10px;
-    width: 20vw;
     text-align: center;
+    margin: 0 .75vw 0 .75vw;
+    transition: color .75s ease, transform .75s ease, text-decoration .75s ease;
+}
+
+#index-link:hover,
+#time-complexity-link:hover {
+    color: white;
+    transform: scale(1.05);
+    text-decoration: underline;
 }
 
 #title {
-    font-size: 2rem;
-    font-weight: 700;
+    margin: 0 1.75vw .5vh 2vw;
+    text-align: center;
 }
 
 #content {
