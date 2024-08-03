@@ -234,25 +234,28 @@ bpButton.addEventListener('click', async function(event) {
 });
 
 let filterButton = document.getElementById("filter-button");
-filterButton.addEventListener("click", (event) => {
+filterButton.addEventListener("click", async (event) => {
     console.log("filter button clicked");
     event.preventDefault();
-    var searchStartTime = document.getElementById("start-time").value;
-    var searchEndTime = document.getElementById("end-time").value;
-    var searchLatitude = document.getElementById("latitude").value;
-    var searchLongitude = document.getElementById("longitude").value;
-    var searchRadius = document.getElementById("radius").value;
+    var startTime = document.getElementById("start-time").value;
+    var endTime = document.getElementById("end-time").value;
+    var latitude = document.getElementById("latitude").value;
+    var longitude = document.getElementById("longitude").value;
+    var radius = document.getElementById("radius").value;
 
-    var dbSearchURL = '/api/crimes?start_time=${searchStartTime}&end_time=${searchEndTime}&latitude=${searchLatitude}&longitude=${searchLongitude}&radius=${searchRadius}';
+    let dbSearchURL = `/api/crimes?start_time=${startTime}&end_time=${endTime}&latitude=${latitude}&longitude=${longitude}&radius=${radius}`;
+    console.log(dbSearchURL);
 
-    fetch(dbSearchURL).then(response => response.json()).then(data => {
-        crimesList.innerHTML = "";
+    const response = await fetch(dbSearchURL);
+    const jsonData = await response.json();
+    const crimeList = document.getElementById('crimes-list');
+        crimeList.innerHTML = "";
 
-        data.forEach(crime => {
+        jsonData.forEach(crime => {
             var crimeItem = document.createElement("li");
-            crimeItem.textContent = crime.description;
-            crimesList.appendChild(crimeItem);
+            crimeItem.textContent = crime.Incident_Type;
+            crimeList.appendChild(crimeItem);
+            console.log(crime.Incident_Type);
         });
-    }).catch(error=>console.error('error fetching crime data', error));
 
 });

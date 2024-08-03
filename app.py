@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 def get_db():
     if 'db' not in g:
-        db = sqlite3.connect('db/crime.db')
+        g.db = sqlite3.connect('db/crime.db')
         g.db.row_factory = sqlite3.Row
 
     return g.db
@@ -56,17 +56,19 @@ def visualization():
 
 @app.route('/api/crimes', methods=['GET'])
 def get_crimes():
-    start_time = request.args.get('searchStart_time')
-    end_time = request.args.get('searchEnd_time')
-    latitude = request.args.get('searchLatitude')
-    longitude = float(request.args.get('searchLongitude'))
-    radius = float(request.args.get('searchRadius'))
+    start_time = request.args.get('start_time')
+    end_time = request.args.get('end_time')
+    latitude = request.args.get('latitude')
+    longitude = request.args.get('longitude')
+    radius = request.args.get('radius')
+
+
+    latitude = float(latitude)
+    longitude = float(longitude)
+    radius = float(radius)
 
     conn = get_db()
     cursor = conn.cursor()
-
-    start_time = datetime.strptime(start_time, '%H:%M').time()
-    end_time = datetime.strptime(end_time, '%H:%M').time()
 
     cursor.execute("SELECT * FROM incidents")
     rows = cursor.fetchall()
@@ -74,20 +76,30 @@ def get_crimes():
 
     filtered_crimes = []
     for row in rows:
-        crime_time = datetime.strptime(row['Offense_Date'], '%Y-%m-%d %H:%M:%S').time()
+        temp_time = row['Offense_Date']
+        crime_time = datetime.strptime(temp_time[11:19], '%H:%M:%S').time()
         crime_lat = row['Latitude']
+        print(type(crime_lat))
         crime_lon = row['Longitude']
+        if not crime_lat or not crime_lon or type(crime_lat) != float or type(crime_lon) != float:  
+            continue
 
-        if start_time <= crime_time <= end_time:
-            distance = haversine(latitude, longitude, crime_lat, crime_lon)
-            if distance <= radius:
-                filtered_crimes.append({
-                    "ID": row['ID'],
-                    "Incident_Type": row['Incident_Type'],
-                    "Offense_Date": row['Offense_Date'],
-                    "Latitude": row['Latitude'],
-                    "Longitude": row['Longitude']
-                })
+        if start_time and end_time:
+            start_time = datetime.strptime(start_time, '%H:%M').time()
+            end_time = datetime.strptime(end_time, '%H:%M').time()
+            if not (start_time <= crime_time <= end_time):
+                continue
+
+        distance = haversine(latitude, longitude, crime_lat, crime_lon)
+        if distance <= radius:
+            filtered_crimes.append({
+                "ID": row['ID'],
+                "Incident_Type": row['Incident_Type'],
+                "Offense_Date": row['Offense_Date'],
+                "Latitude": row['Latitude'],
+                "Longitude": row['Longitude']
+            })
+    print(f for f in filtered_crimes)
     return jsonify(filtered_crimes)
 
 @app.teardown_appcontext
