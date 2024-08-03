@@ -6,9 +6,11 @@ let sort_title = document.getElementById("sort_title");
 let numDataPoints = 250;
 let heightFactor = 400;
 let nums = [];
-let speedFactor = 50;
+let speedFactor = 25;
+let controller = new AbortController();
 
 function randomArrays() {
+    nums = [];
     for (let x = 0; x < numDataPoints; x++) {
         let randValue = Math.random();
         nums.push(randValue);
@@ -30,7 +32,7 @@ function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function partition(nums, low, high, container) {
+async function partition(nums, low, high, container, signal) {
     let pivot = nums[low];
     let up = low;
     let down = high;
@@ -46,23 +48,27 @@ async function partition(nums, low, high, container) {
             [nums[up], nums[down]] = [nums[down], nums[up]];
             renderBars(nums, container);
             await sleep(speedFactor);
+            if (signal.aborted) return;
         }
     }
     [nums[low], nums[down]] = [nums[down], nums[low]];
     renderBars(nums, container);
     await sleep(speedFactor);
+    if (signal.aborted) return;
     return down;
 }
 
-async function quicksort(nums, low, high, container) {
+async function quicksort(nums, low, high, container, signal) {
     if (low < high) {
-        let pivotIndex = await partition(nums, low, high, container);
-        await quicksort(nums, low, pivotIndex - 1, container);
-        await quicksort(nums, pivotIndex + 1, high, container);
+        let pivotIndex = await partition(nums, low, high, container, signal);
+        if (signal.aborted) return;
+        await quicksort(nums, low, pivotIndex - 1, container, signal);
+        if (signal.aborted) return;
+        await quicksort(nums, pivotIndex + 1, high, container, signal);
     }
 }
 
-async function heapify(nums, index, size, container) {
+async function heapify(nums, index, size, container, signal) {
     let greatest = index;
     let left = 2 * index + 1;
     let right = 2 * index + 2;
@@ -77,38 +83,42 @@ async function heapify(nums, index, size, container) {
         [nums[index], nums[greatest]] = [nums[greatest], nums[index]];
         renderBars(nums, container);
         await sleep(speedFactor);
-        await heapify(nums, greatest, size, container);
+        if (signal.aborted) return;
+        await heapify(nums, greatest, size, container, signal);
     }
 }
 
-async function heapsort(nums, container) {
+async function heapsort(nums, container, signal) {
     let size = nums.length;
 
     for (let x = Math.floor(size / 2) - 1; x >= 0; x--) {
-        await heapify(nums, x, size, container);
+        await heapify(nums, x, size, container, signal);
+        if (signal.aborted) return;
     }
 
     for (let x = size - 1; x > 0; x--) {
         [nums[0], nums[x]] = [nums[x], nums[0]];
         renderBars(nums, container);
         await sleep(speedFactor);
-        await heapify(nums, 0, x, container);
+        if (signal.aborted) return;
+        await heapify(nums, 0, x, container, signal);
     }
 }
 
-async function bubblesort(nums, n, container) {
+async function bubblesort(nums, n, container, signal) {
     for (let x = 0; x < n - 1; x++) {
         for (let y = 0; y < n - x - 1; y++) {
             if (nums[y] > nums[y + 1]) {
                 [nums[y], nums[y + 1]] = [nums[y + 1], nums[y]];
                 renderBars(nums, container);
                 await sleep(speedFactor);
+                if (signal.aborted) return;
             }
         }
     }
 }
 
-async function insertionsort(nums, n, container) {
+async function insertionsort(nums, n, container, signal) {
     for (let x = 0; x < n; x++) {
         let key = nums[x];
         let y = x - 1;
@@ -118,12 +128,13 @@ async function insertionsort(nums, n, container) {
             y = y - 1;
             renderBars(nums, container);
             await sleep(speedFactor);
+            if (signal.aborted) return;
         }
         nums[y + 1] = key;
     }
 }
 
-async function merge(nums, left, middle, right, container) {
+async function merge(nums, left, middle, right, container, signal) {
     let n1 = middle - left + 1;
     let n2 = right - middle;
     let L = new Array(n1);
@@ -151,6 +162,7 @@ async function merge(nums, left, middle, right, container) {
         k++;
         renderBars(nums, container);
         await sleep(speedFactor);
+        if (signal.aborted) return;
     }
 
     while (i < n1) {
@@ -159,6 +171,7 @@ async function merge(nums, left, middle, right, container) {
         k++;
         renderBars(nums, container);
         await sleep(speedFactor);
+        if (signal.aborted) return;
     }
 
     while (j < n2) {
@@ -167,27 +180,31 @@ async function merge(nums, left, middle, right, container) {
         k++;
         renderBars(nums, container);
         await sleep(speedFactor);
+        if (signal.aborted) return;
     }
 }
 
-async function mergesort(nums, start, end, container) {
+async function mergesort(nums, start, end, container, signal) {
     if (start < end) {
         let middle = Math.floor(start + (end - start) / 2);
-        await mergesort(nums, start, middle, container);
-        await mergesort(nums, middle + 1, end, container);
-        await merge(nums, start, middle, end, container);
+        await mergesort(nums, start, middle, container, signal);
+        if (signal.aborted) return;
+        await mergesort(nums, middle + 1, end, container, signal);
+        if (signal.aborted) return;
+        await merge(nums, start, middle, end, container, signal);
     }
 }
 
-async function swap(nums, minIdx, currIdx, container) {
+async function swap(nums, minIdx, currIdx, container, signal) {
     let temp = nums[minIdx];
     nums[minIdx] = nums[currIdx];
     nums[currIdx] = temp;
     renderBars(nums, container);
     await sleep(speedFactor);
+    if (signal.aborted) return;
 }
 
-async function selectionsort(nums, n, container) {
+async function selectionsort(nums, n, container, signal) {
     for (let x = 0; x < n - 1; x++) {
         let minIdx = x;
         for (let y = x + 1; y < n; y++) {
@@ -196,14 +213,16 @@ async function selectionsort(nums, n, container) {
             }
             renderBars(nums, container);
             await sleep(speedFactor);
+            if (signal.aborted) return;
         }
         if (minIdx !== x) {
-            await swap(nums, minIdx, x, container);
+            await swap(nums, minIdx, x, container, signal);
+            if (signal.aborted) return;
         }
     }
 }
 
-async function shellsort(nums, container) {
+async function shellsort(nums, container, signal) {
     for (
         let gap = Math.floor(nums.length / 2);
         gap > 0;
@@ -218,6 +237,7 @@ async function shellsort(nums, container) {
             nums[y] = temp;
             renderBars(nums, container);
             await sleep(speedFactor);
+            if (signal.aborted) return;
         }
     }
 }
@@ -239,37 +259,44 @@ window.onload = function () {
 };
 
 sort_select.addEventListener("change", function () {
+    controller.abort();
+    controller = new AbortController();
+    nums = [];
+    randomArrays();
+    renderBars(nums, sort_bars);
+    console.log(nums.length);
     changeTitle();
-    window.location.reload();
 });
 
 sort_btn.addEventListener("click", async function () {
+    let signal = controller.signal;
     if (sort_select.value === "Bubble Sort") {
-        await bubblesort(nums, nums.length, sort_bars);
+        await bubblesort(nums, nums.length, sort_bars, signal);
     } else if (sort_select.value === "Quick Sort") {
-        await quicksort(nums, 0, nums.length - 1, sort_bars);
+        await quicksort(nums, 0, nums.length - 1, sort_bars, signal);
     } else if (sort_select.value === "Heap Sort") {
-        await heapsort(nums, sort_bars);
+        await heapsort(nums, sort_bars, signal);
     } else if (sort_select.value === "Merge Sort") {
-        await mergesort(nums, 0, nums.length - 1, sort_bars);
+        await mergesort(nums, 0, nums.length - 1, sort_bars, signal);
     } else if (sort_select.value == "Insertion Sort") {
-        await insertionsort(nums, nums.length, sort_bars);
+        await insertionsort(nums, nums.length, sort_bars, signal);
     } else if (sort_select.value == "Selection Sort") {
-        await selectionsort(nums, nums.length, sort_bars);
+        await selectionsort(nums, nums.length, sort_bars, signal);
     } else if (sort_select.value == "Shell Sort") {
-        await shellsort(nums, sort_bars);
+        await shellsort(nums, sort_bars, signal);
     }
 
-    let sortBarsChildren = sort_bars.children;
+    // let sortBarsChildren = sort_bars.children;
 
-    for (let bar of sortBarsChildren) {
-        bar.style.backgroundColor = "#0f141d";
-    }
+    // for (let bar of sortBarsChildren) {
+    //     bar.style.backgroundColor = "#0f141d";
+    // }
 
     console.log("Arrays sorted");
 });
 
 reset_btn.addEventListener("click", function () {
     nums = [];
+    controller.abort();
     window.location.reload();
 });
