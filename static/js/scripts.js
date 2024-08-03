@@ -51,7 +51,6 @@ L.control.customZoom = function(opts) {
 
 L.control.customZoom({ position: 'bottomleft' }).addTo(map);
 
-// Setting up the marker, lat/long, and address
 let startLatitude = 29.64200;
 let startLongitude = -82.35600;
 let marker = L.marker([startLatitude, startLongitude])
@@ -75,7 +74,6 @@ let startUrl = `https://geocode.maps.co/reverse?lat=${lat}&lon=${long}&api_key=$
         }
         const data = await response.json();
 
-        
         const house_number = data.address.house_number || '';
         const road = data.address.road || '';
         const suburb = data.address.suburb || '';
@@ -88,7 +86,7 @@ let startUrl = `https://geocode.maps.co/reverse?lat=${lat}&lon=${long}&api_key=$
         if (postcode) streetAddress += ' ' + postcode;
 
         document.getElementById("search-address").value = streetAddress;
-    } 
+    }
     catch (error) {
         console.error('Error fetching address:', error);
     }
@@ -117,7 +115,7 @@ addressSearch.addEventListener("input", async (e) => {
         document.getElementById("longitude").value = Number(result.lon).toFixed(5);
         marker.setLatLng([result.lat, result.lon]);
         circle.setLatLng([result.lat, result.lon]);
-    } 
+    }
     catch (error) {
         console.error('Error fetching coordinates:', error);
     }
@@ -140,14 +138,21 @@ longitude.addEventListener("input", (e) => {
     addressSetup(marker.getLatLng().lat.toFixed(5), e.target.value);
 });
 
+let coords = []
 map.on("click", async function (e) {
     marker.setLatLng(e.latlng);
     circle.setLatLng(e.latlng);
+    coords = [];
     document.getElementById("latitude").value = marker.getLatLng().lat.toFixed(5);
+    coords.push(marker.getLatLng().lat.toFixed(5));
+    console.log(coords[0]);
     document.getElementById("longitude").value = marker.getLatLng().lng.toFixed(5);
+    coords.push(marker.getLatLng().lng.toFixed(5));
+    console.log(coords[1]);
 
     addressSetup(marker.getLatLng().lat.toFixed(5), marker.getLatLng().lng.toFixed(5));
 });
+
 
 function boundaryStyle(feature){return{fillColor:"#FA4616",fillOpacity:0.1,color:'#FA4616'};}
 
@@ -193,7 +198,7 @@ function disSnap(data) {
     for (let feature of features) {
         const coordinates = feature.geometry.coordinates;
         const name = feature.properties.NAME;
-        let marker = L.marker([coordinates[1], coordinates[0]])
+        let snapM = L.marker([coordinates[1], coordinates[0]])
             .addTo(map)
             .bindPopup("Snap Location: " + name)
             // .openPopup();
@@ -207,7 +212,7 @@ function disAed(data) {
     for (let feature of features) {
         const coordinates = feature.geometry.coordinates;
         const name = feature.properties.NAME;
-        let marker = L.marker([coordinates[1], coordinates[0]])
+        let aedM = L.marker([coordinates[1], coordinates[0]])
             .addTo(map)
             .bindPopup("AED Location: " + name)
             // .openPopup();
@@ -221,7 +226,7 @@ function disPhone(data) {
     for (let feature of features) {
         const coordinates = feature.geometry.coordinates;
         const name = feature.properties.NAME;
-        let marker = L.marker([coordinates[1], coordinates[0]])
+        let phoneM = L.marker([coordinates[1], coordinates[0]])
             .addTo(map)
             .bindPopup("Blue Phone Location: " + name)
             // .openPopup();
@@ -274,11 +279,17 @@ snapButton.addEventListener('click', async function (event) {
                 map.removeLayer(layer);
             }
         });
+        L.marker([coords[0], coords[1]])
+            .addTo(map)
+            .bindPopup("University of Florida<br>Go Gators!")
+            // .openPopup();
+        // let circle = L.circle(marker.getLatLng(), {
+        //     color: "blue",
+        //     fillColor: "#0032fc",
+        //     fillOpacity: 0.5,
+        //     radius: radius.value * 1609.344,
+        // }).addTo(map);
     }
-    let marker = L.marker([29.64200, -82.35600])
-        .addTo(map)
-        .bindPopup("University of Florida<br>Go Gators!")
-        // .openPopup();
 });
 
 aedButton.addEventListener('mousedown', function() {
@@ -293,6 +304,7 @@ aedButton.addEventListener('mouseenter', function() {
 aedButton.addEventListener('mouseleave', function() {
     this.style.transform='scale(1)';
 })
+
 aedButton.addEventListener('click', async function(event) {
     event.stopPropagation();
     event.preventDefault();
@@ -308,11 +320,18 @@ aedButton.addEventListener('click', async function(event) {
                 map.removeLayer(layer);
             }
         });
+        // let marker = L.marker([29.64200, -82.35600])
+        //     .addTo(map)
+        //     .bindPopup("University of Florida<br>Go Gators!")
+            // .openPopup();
+        // let circle = L.circle(marker.getLatLng(), {
+        //     color: "blue",
+        //     fillColor: "#0032fc",
+        //     fillOpacity: 0.5,
+        //     radius: radius.value * 1609.344,
+        // }).addTo(map);
     }
-    let marker = L.marker([29.64200, -82.35600])
-        .addTo(map)
-        .bindPopup("University of Florida<br>Go Gators!")
-        // .openPopup();
+
 });
 
 bpButton.addEventListener('mousedown', function() {
@@ -342,11 +361,17 @@ bpButton.addEventListener('click', async function(event) {
                 map.removeLayer(layer);
             }
         });
+        // let marker = L.marker([29.64200, -82.35600])
+        //     .addTo(map)
+        //     .bindPopup("University of Florida<br>Go Gators!")
+        //     // .openPopup();
+        // let circle = L.circle(marker.getLatLng(), {
+        //     color: "blue",
+        //     fillColor: "#0032fc",
+        //     fillOpacity: 0.5,
+        //     radius: radius.value * 1609.344,
+        // }).addTo(map);
     }
-    let marker = L.marker([29.64200, -82.35600])
-        .addTo(map)
-        .bindPopup("University of Florida<br>Go Gators!")
-        // .openPopup();
 });
 
 let filterButton = document.getElementById("filter-button");
