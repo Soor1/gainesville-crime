@@ -1,10 +1,12 @@
 from flask import Flask, render_template, jsonify, request, session, g
+from flask_cors import CORS
 import sqlite3
 from math import radians, cos, sin, sqrt, atan2
 from datetime import datetime
 import json
 
 app = Flask(__name__)
+CORS(app)
 
 def get_db():
     if 'db' not in g:
@@ -99,7 +101,6 @@ def get_crimes():
                 "Latitude": row['Latitude'],
                 "Longitude": row['Longitude']
             })
-    print(f for f in filtered_crimes)
     return jsonify(filtered_crimes)
 
 @app.teardown_appcontext
