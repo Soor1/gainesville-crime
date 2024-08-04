@@ -6,7 +6,7 @@
     "routes": [
         {"src": "/(.*)", "dest": "app.py"},
         {
-            "src": "/api/crimes",
+            "src": "/crimes",
             "methods": ["GET"],
             "dest": "app.py"
         }
