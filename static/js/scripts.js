@@ -279,10 +279,17 @@ snapButton.addEventListener('click', async function (event) {
                 map.removeLayer(layer);
             }
         });
-        L.marker([coords[0], coords[1]])
+        marker = L.marker([coords[0], coords[1]])
             .addTo(map)
             .bindPopup("University of Florida<br>Go Gators!")
-            // .openPopup();
+        if (aedBool) {
+            const jsonData = await fetchAed();
+            disAed(jsonData)
+        }
+        if (phoneBool) {
+            const jsonData = await fetchPhone();
+            disPhone(jsonData)
+        }
         // let circle = L.circle(marker.getLatLng(), {
         //     color: "blue",
         //     fillColor: "#0032fc",
@@ -320,9 +327,17 @@ aedButton.addEventListener('click', async function(event) {
                 map.removeLayer(layer);
             }
         });
-        // let marker = L.marker([29.64200, -82.35600])
-        //     .addTo(map)
-        //     .bindPopup("University of Florida<br>Go Gators!")
+        marker = L.marker([coords[0], coords[1]])
+            .addTo(map)
+            .bindPopup("University of Florida<br>Go Gators!")
+        if (snapBool) {
+            const jsonData = await fetchSnap();
+            disSnap(jsonData)
+        }
+        if (bpBool) {
+            const jsonData = await fetchPhone();
+            disPhone(jsonData)
+        }
             // .openPopup();
         // let circle = L.circle(marker.getLatLng(), {
         //     color: "blue",
@@ -361,9 +376,17 @@ bpButton.addEventListener('click', async function(event) {
                 map.removeLayer(layer);
             }
         });
-        // let marker = L.marker([29.64200, -82.35600])
-        //     .addTo(map)
-        //     .bindPopup("University of Florida<br>Go Gators!")
+        marker = L.marker([coords[0], coords[1]])
+            .addTo(map)
+            .bindPopup("University of Florida<br>Go Gators!")
+        if (aedBool) {
+            const jsonData = await fetchAed();
+            disAed(jsonData)
+        }
+        if (snapBool) {
+            const jsonData = await fetchSnap();
+            disSnap(jsonData)
+        }
         //     // .openPopup();
         // let circle = L.circle(marker.getLatLng(), {
         //     color: "blue",
