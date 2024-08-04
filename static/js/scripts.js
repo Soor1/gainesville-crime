@@ -51,9 +51,46 @@ L.control.customZoom = function(opts) {
 
 L.control.customZoom({ position: 'bottomleft' }).addTo(map);
 
+let orangeIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+let greyIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+let greenIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+let blueIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+
 let startLatitude = 29.64200;
 let startLongitude = -82.35600;
-let marker = L.marker([startLatitude, startLongitude])
+let marker = L.marker([startLatitude, startLongitude], { icon: orangeIcon })
     .addTo(map)
     .bindPopup("University of Florida<br>Go Gators!");
     // .openPopup();
@@ -138,7 +175,7 @@ longitude.addEventListener("input", (e) => {
     addressSetup(marker.getLatLng().lat.toFixed(5), e.target.value);
 });
 
-let coords = []
+let coords = [29.64200, -82.35600]
 map.on("click", async function (e) {
     marker.setLatLng(e.latlng);
     circle.setLatLng(e.latlng);
@@ -198,7 +235,7 @@ function disSnap(data) {
     for (let feature of features) {
         const coordinates = feature.geometry.coordinates;
         const name = feature.properties.NAME;
-        let snapM = L.marker([coordinates[1], coordinates[0]])
+        let snapM = L.marker([coordinates[1], coordinates[0]], {icon: greyIcon})
             .addTo(map)
             .bindPopup("Snap Location: " + name)
             // .openPopup();
@@ -212,7 +249,7 @@ function disAed(data) {
     for (let feature of features) {
         const coordinates = feature.geometry.coordinates;
         const name = feature.properties.NAME;
-        let aedM = L.marker([coordinates[1], coordinates[0]])
+        let aedM = L.marker([coordinates[1], coordinates[0]], {icon: greenIcon})
             .addTo(map)
             .bindPopup("AED Location: " + name)
             // .openPopup();
@@ -226,7 +263,7 @@ function disPhone(data) {
     for (let feature of features) {
         const coordinates = feature.geometry.coordinates;
         const name = feature.properties.NAME;
-        let phoneM = L.marker([coordinates[1], coordinates[0]])
+        let phoneM = L.marker([coordinates[1], coordinates[0]], {icon: blueIcon})
             .addTo(map)
             .bindPopup("Blue Phone Location: " + name)
             // .openPopup();
@@ -279,14 +316,14 @@ snapButton.addEventListener('click', async function (event) {
                 map.removeLayer(layer);
             }
         });
-        marker = L.marker([coords[0], coords[1]])
+        marker = L.marker([coords[0], coords[1]], {icon: orangeIcon})
             .addTo(map)
             .bindPopup("University of Florida<br>Go Gators!")
         if (aedBool) {
             const jsonData = await fetchAed();
             disAed(jsonData)
         }
-        if (phoneBool) {
+        if (bpBool) {
             const jsonData = await fetchPhone();
             disPhone(jsonData)
         }
@@ -327,7 +364,7 @@ aedButton.addEventListener('click', async function(event) {
                 map.removeLayer(layer);
             }
         });
-        marker = L.marker([coords[0], coords[1]])
+        marker = L.marker([coords[0], coords[1]], {icon: orangeIcon})
             .addTo(map)
             .bindPopup("University of Florida<br>Go Gators!")
         if (snapBool) {
@@ -368,7 +405,7 @@ bpButton.addEventListener('click', async function(event) {
     console.log("phone clicked");
     bpBool = !bpBool;
     if (bpBool) {
-        const jsonData = await fetchSnap();
+        const jsonData = await fetchPhone();
         disPhone(jsonData);
     } else {
         map.eachLayer(function (layer) {
@@ -376,7 +413,7 @@ bpButton.addEventListener('click', async function(event) {
                 map.removeLayer(layer);
             }
         });
-        marker = L.marker([coords[0], coords[1]])
+        marker = L.marker([coords[0], coords[1]], {icon: orangeIcon})
             .addTo(map)
             .bindPopup("University of Florida<br>Go Gators!")
         if (aedBool) {
