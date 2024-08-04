@@ -1,12 +1,10 @@
 from flask import Flask, render_template, jsonify, request, session, g
-from flask_cors import CORS
 import sqlite3
 from math import radians, cos, sin, sqrt, atan2
 from datetime import datetime
 import json
 
 app = Flask(__name__)
-CORS(app)
 
 def get_db():
     if 'db' not in g:
@@ -56,7 +54,7 @@ def about():
 def visualization():
     return render_template('visualization.html')
 
-@app.route('/api/crimes', methods=['GET'])
+@app.route('/crimes', methods=['GET'])
 def get_crimes():
     start_time = request.args.get('start_time')
     end_time = request.args.get('end_time')
