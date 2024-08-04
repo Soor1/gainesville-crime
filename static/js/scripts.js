@@ -444,7 +444,7 @@ filterButton.addEventListener("click", async (event) => {
     var longitude = document.getElementById("longitude").value;
     var radius = document.getElementById("radius").value;
 
-    let dbSearchURL = `https://gainesville-crime.vercel.app/api/crimes?start_time=${startTime}&end_time=${endTime}&latitude=${latitude}&longitude=${longitude}&radius=${radius}`;
+    let dbSearchURL = `/crimes?start_time=${startTime}&end_time=${endTime}&latitude=${latitude}&longitude=${longitude}&radius=${radius}`;
     console.log(dbSearchURL);
 
     const response = await fetch(dbSearchURL);
