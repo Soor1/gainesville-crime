@@ -434,29 +434,78 @@ bpButton.addEventListener('click', async function(event) {
     }
 });
 
+
 let filterButton = document.getElementById("filter-button");
-filterButton.addEventListener("click", async (event) => {
-    console.log("filter button clicked");
-    event.preventDefault();
-    var startTime = document.getElementById("start-time").value;
-    var endTime = document.getElementById("end-time").value;
-    var latitude = document.getElementById("latitude").value;
-    var longitude = document.getElementById("longitude").value;
-    var radius = document.getElementById("radius").value;
+filterButton.addEventListener('click', function () {
+    // console.log("button clicked");
+    let startTime = document.getElementById("start-time").value;
+    let endTime = document.getElementById("end-time").value;
+    let latitude = document.getElementById("latitude").value;
+    let longitude = document.getElementById("longitude").value;
+    let radius = document.getElementById("radius").value;
 
-    let dbSearchURL = `/crimes?start_time=${startTime}&end_time=${endTime}&latitude=${latitude}&longitude=${longitude}&radius=${radius}`;
-    console.log(dbSearchURL);
+    // console.log(typeof latitude);
+    // console.log(typeof longitude);
+    // console.log(typeof radius);
 
-    const response = await fetch(dbSearchURL);
-    const jsonData = await response.json();
-    const crimeList = document.getElementById('crimes-list');
-        crimeList.innerHTML = "";
+    latitude = parseFloat(latitude);
+    longitude = parseFloat(longitude);
+    radius = parseFloat(radius);
 
-        jsonData.forEach(crime => {
-            var crimeItem = document.createElement("li");
-            crimeItem.textContent = crime.Incident_Type;
-            crimeList.appendChild(crimeItem);
-            console.log(crime.Incident_Type);
+    if (!startTime) {
+        startTime = "0";
+    }
+
+    if (!endTime) {
+        endTime = "24";
+    }
+
+    startTime = parseInt(startTime);
+    endTime = parseInt(endTime);
+
+    console.log(startTime);
+    console.log(endTime);
+
+    // Build the query string
+    let queryString = `startTime=${startTime}&endTime=${endTime}&latitude=${latitude}&longitude=${longitude}&radius=${radius}`;
+
+    // Fetch data from the server
+    fetch(`/crimes?${queryString}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Data from /crimes:", data);
+        })
+        .catch(error => {
+            console.error("Error fetching data:", error);
         });
-
 });
+
+
+
+
+
+
+// filterButton.addEventListener("click", async (event) => {
+//     console.log("filter button clicked");
+//     event.preventDefault();
+//     var startTime = document.getElementById("start-time").value;
+//     var endTime = document.getElementById("end-time").value;
+//     var latitude = document.getElementById("latitude").value;
+//     var longitude = document.getElementById("longitude").value;
+//     var radius = document.getElementById("radius").value;
+
+//     let dbSearchURL = `/api/crimes?start_time=${startTime}&end_time=${endTime}&latitude=${latitude}&longitude=${longitude}&radius=${radius}`;
+//     console.log(dbSearchURL);
+
+//     const response = await fetch(dbSearchURL);
+//     const jsonData = await response.json();
+//     const crimeList = document.getElementById('crimes-list');
+//         crimeList.innerHTML = "";
+
+//         jsonData.forEach(crime => {
+//             var crimeItem = document.createElement("li");
+//             crimeItem.textContent = crime.Incident_Type;
+//             crimeList.appendChild(crimeItem);
+//             console.log(crime.Incident_Type);
+//         });
+// });

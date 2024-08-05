@@ -6,13 +6,7 @@ import json
 
 app = Flask(__name__)
 
-def get_db():
-    if 'db' not in g:
-        g.db = sqlite3.connect('db/crime.db')
-        g.db.row_factory = sqlite3.Row
-
-    return g.db
-
+# ----------------- Helper Functions -----------------
 def haversine(lat1, lon1, lat2, lon2):
     R = 3959
 
@@ -23,6 +17,8 @@ def haversine(lat1, lon1, lat2, lon2):
 
     distance = R * c
     return distance
+
+# ----------------- Data Routes -----------------
 
 @app.route('/snap')
 def getSnap():
@@ -42,6 +38,57 @@ def getOhone():
         data = json.load(f)
     return data
 
+@app.route('/crimes', methods=['GET'])
+def get_crimes():
+    start_time = request.args.get('startTime')
+    end_time = request.args.get('endTime')
+    latitude = request.args.get('latitude')
+    longitude = request.args.get('longitude')
+    radius = request.args.get('radius')
+
+    latitude = float(latitude)
+    longitude = float(longitude)
+    radius = float(radius)
+    start_time = int(start_time)
+    end_time = int(end_time)
+
+    conn = sqlite3.connect('db/crime.db')
+    cursor = conn.cursor()
+
+    query = "SELECT * FROM incidents"
+    params = []
+
+    query += " WHERE Offense_Hour_of_Day BETWEEN ? AND ?"
+    params.extend([start_time, end_time])
+
+    cursor.execute(query, params)
+    rows = cursor.fetchall()
+
+    filtered_rows = {}
+    for row in rows:
+        crime_latitude = row[11]
+        crime_longitude = row[12]
+
+        # Ensure values are not None and are of the correct type (float)
+        if (crime_latitude is None or crime_longitude is None or
+            latitude is None or longitude is None or
+            not isinstance(crime_latitude, float) or
+            not isinstance(crime_longitude, float) or
+            not isinstance(latitude, float) or
+            not isinstance(longitude, float)):
+            continue  # Skip this iteration if any condition is not met
+
+        distance = haversine(latitude, longitude, crime_latitude, crime_longitude)
+        if distance <= radius:
+            filtered_rows[row[1]] = [crime_latitude, crime_longitude]
+
+
+    conn.close()  # Close the database connection after fetching the data
+
+    return jsonify(filtered_rows)
+
+# ----------------- Web Pages -----------------
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -53,60 +100,6 @@ def about():
 @app.route('/visualization')
 def visualization():
     return render_template('visualization.html')
-
-@app.route('/crimes', methods=['GET'])
-def get_crimes():
-    start_time = request.args.get('start_time')
-    end_time = request.args.get('end_time')
-    latitude = request.args.get('latitude')
-    longitude = request.args.get('longitude')
-    radius = request.args.get('radius')
-
-
-    latitude = float(latitude)
-    longitude = float(longitude)
-    radius = float(radius)
-
-    conn = get_db()
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM incidents")
-    rows = cursor.fetchall()
-    conn.close()
-
-    filtered_crimes = []
-    for row in rows:
-        temp_time = row['Offense_Date']
-        crime_time = datetime.strptime(temp_time[11:19], '%H:%M:%S').time()
-        crime_lat = row['Latitude']
-        print(type(crime_lat))
-        crime_lon = row['Longitude']
-        if not crime_lat or not crime_lon or type(crime_lat) != float or type(crime_lon) != float:  
-            continue
-
-        if start_time and end_time:
-            start_time = datetime.strptime(start_time, '%H:%M').time()
-            end_time = datetime.strptime(end_time, '%H:%M').time()
-            if not (start_time <= crime_time <= end_time):
-                continue
-
-        distance = haversine(latitude, longitude, crime_lat, crime_lon)
-        if distance <= radius:
-            filtered_crimes.append({
-                "ID": row['ID'],
-                "Incident_Type": row['Incident_Type'],
-                "Offense_Date": row['Offense_Date'],
-                "Latitude": row['Latitude'],
-                "Longitude": row['Longitude']
-            })
-    return jsonify(filtered_crimes)
-
-@app.teardown_appcontext
-def teardown_db(exception):
-    db = g.pop('db', None)
-
-    if db is not None:
-        db.close()
 
 if __name__ == '__main__':
     app.run(debug=True)
