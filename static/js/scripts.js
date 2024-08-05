@@ -1,3 +1,4 @@
+import {kLargestHeap, kLargestQuickSort} from "./kthElement.js";
 const value = document.querySelector("#value");
 const radius = document.querySelector("#radius");
 let aeds = document.querySelector("#Aeds");
@@ -435,8 +436,8 @@ bpButton.addEventListener('click', async function(event) {
 });
 
 
-let filterButton = document.getElementById("filter-button");
-filterButton.addEventListener('click', function () {
+let heapButton = document.getElementById("heap-button");
+heapButton.addEventListener('click', function () {
     // console.log("button clicked");
     let startTime = document.getElementById("start-time").value;
     let endTime = document.getElementById("end-time").value;
@@ -468,16 +469,51 @@ filterButton.addEventListener('click', function () {
 
     // Build the query string
     let queryString = `startTime=${startTime}&endTime=${endTime}&latitude=${latitude}&longitude=${longitude}&radius=${radius}`;
-
+    var coordList = [];
     // Fetch data from the server
     fetch(`/crimes?${queryString}`)
         .then(response => response.json())
         .then(data => {
             console.log("Data from /crimes:", data);
+            for (let key in data) {
+                if (data.hasOwnProperty(key)) {
+                    for(let i = 0; i < data[key].length; i++) {
+                        let temp = [];
+                        temp.push(data[key][i][0]);
+                        temp.push(data[key][i][1]);
+                        coordList.push(temp);
+                    }
+                }
+            }
         })
         .catch(error => {
             console.error("Error fetching data:", error);
         });
+        console.log(coordList);
+        //coordList is a list of all of the latitude and longitude coordinates
+
+        //number of grid boxes for hashmap in each direction based off of the radius
+        let numLatBoxes = 500;
+        let numLongBoxes = 500;
+        let gridHash = new Array(numLongBoxes);
+
+        for (let i = 0; i < numLatBoxes; i++) {
+        gridHash[i] = new Array(numLatBoxes).fill(0); // Initialize each element to 0 (or any default value)
+        }
+        let westBoundary = -82.43070;
+        let southBoundary = 29.59;
+        let eastBoundary = -82.23;
+        let northBoundary = 29.78;
+
+        //maps are backed by hashtables in js so theoretically lookup time is O(1). You can inmplement the hashmap with a 2d array or with a map.
+
+        for (let i = 0; i < coordList.length; i++){
+            let lat = coordList[i][0];
+            let long = coordList[i][1];
+            let latIndex = Math.floor((lat - latitude) / radius * numLatBoxes);
+            let longIndex = Math.floor((long - longitude) / radius * numLongBoxes);
+            gridHash[latIndex][longIndex] += 1;
+        }
 });
 
 
