@@ -80,7 +80,10 @@ def get_crimes():
 
         distance = haversine(latitude, longitude, crime_latitude, crime_longitude)
         if distance <= radius:
-            filtered_rows[row[1]] = [crime_latitude, crime_longitude]
+            if row[1] in filtered_rows:
+                filtered_rows[row[1]].append([crime_latitude, crime_longitude])
+            else:
+                filtered_rows[row[1]] = [[crime_latitude, crime_longitude]]
 
 
     conn.close()  # Close the database connection after fetching the data
