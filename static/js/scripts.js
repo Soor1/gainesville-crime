@@ -440,14 +440,6 @@ bpButton.addEventListener('click', async function(event) {
 
 let heapButton = document.getElementById("heap-button");
 heapButton.addEventListener('click', async function () {
-    let heatMapData = [];
-    var heat = L.heatLayer(
-        heatMapData, // lat, lng, intensity
-        {radius: radius*2+20},{gradient:{
-            0.4: 'lime',
-            0.75: 'yellow',
-            1.0: 'red'}}).addTo(map);
-
     // console.log("button clicked");
     let startTime = document.getElementById("start-time").value;
     let endTime = document.getElementById("end-time").value;
@@ -543,6 +535,14 @@ heapButton.addEventListener('click', async function () {
         const kthLargestHeap = kLargestHeap(flattened, k); 
         console.log(kthLargestHeap);
         let heatConstant = 100;
+
+        let heatMapData = [];
+        var heat = L.heatLayer(
+            heatMapData, // lat, lng, intensity
+            {radius: radius*2+20},{gradient:{
+                0.4: 'lime',
+                0.75: 'yellow',
+                1.0: 'red'}}).addTo(map);
         for (let i = 0; i < k; i++) {
             let row = kthLargestHeap[i][1];
             let col = kthLargestHeap[i][2];
@@ -550,7 +550,10 @@ heapButton.addEventListener('click', async function () {
             let long = westBoundary + col * longDiff;
             heatMapData.push([lat, long, heatConstant/(i+1)]);
         }
-        L.redraw();
+        heat.setLatLngs(heatMapData);
+        
+        
+
 });
 
 
