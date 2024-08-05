@@ -40,6 +40,52 @@ body {
     gap: 3vh;
 }
 
+#entry-fields-container h1{
+    text-align: center;
+    height: fit-content;
+    margin: auto;
+}
+
+.btn1-class{
+    z-index: 1000;
+    height: fit-content;
+    width: fit-content;
+    min-width: calc(2vw + 15px);
+    padding: 15px;
+    border: none;
+    font-size: 1vw;
+    font-weight: 600;
+    font-family: Helvetica;
+    color: white;
+    background: rgba(0,33,165, .8);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.7);
+    border-radius: 25px;
+    transition: transform .4s ease;
+    transform: scale(1);
+    position: absolute;
+    top: 2.5%;
+    right: 3.5%;
+}
+
+.help-container-class{
+    padding: 15px;
+    height: 80%;
+    width: 80%;
+    background-color: white;
+    border: 8px solid rgba(0,33,165, .8);
+    border-radius: 50px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.7);
+    z-index: 1002;
+    position: absolute;
+    top: 10%;
+    right: -110%;
+    transition: right .4s ease;
+}
+
+.help-container-shift{
+    right: 6%;
+}
+
 .double-input-container{
     display: flex;
     align-items: center;

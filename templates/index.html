@@ -18,8 +18,26 @@
             <img src="../static/resources/UFLogo.png" id="uf-logo" alt="UF Logo"/>
         </div>
         <div id="map-and-input-container">
+
             <div id="entry-fields-container" class="box">
                 <h1>Custom Fields</h1>
+                <button id="btn1" class="btn1-class">?</button>
+
+                <div id="help-container" class="help-container-class">
+                    <h1 style="margin: 0 auto; ">Help</h1>
+                    <p style="margin: 0 auto; padding: 10px; font-size: 2.2vh; line-height: 3.2vh; text-align: center;">
+                        Welcome to Gainesville Crime! The goal of this web app is to produce a 
+                        heat map of the top areas of crime in Gainesville, while also exploring the differences in
+                        performance between computer science sorting algorithms. The two sorting algorithms being 
+                        utilized will be heap sort and quick sort. You can input several different filters
+                        to specify what results will get produced. You can also toggle the SNAP, AED, and Blue Phone 
+                        locations in the top left of the map. At the bottom of the custom input fields, you will
+                        see button for both head sort and quick sort. Both will yield the same results in regards
+                        to the map, yet they will have difference in performance output. We will track this in
+                        terms of the number of operations each sort takes, and output this below each button.
+                    </p>
+                </div>
+
                 <div class="input-container">
                     <label for="search-address">Address</label>
                     <input
@@ -110,7 +128,6 @@
                 </ul>
             </div>
             <div id="map">
-                <button id="btn1" class="top-left-buttons">?</button>
                 <button id="btn2" class="top-left-buttons">SNAP</button>
                 <button id="btn3" class="top-left-buttons">AED</button>
                 <button id="btn4" class="top-left-buttons">Blue Phone</button>

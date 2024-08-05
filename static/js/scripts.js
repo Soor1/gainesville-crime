@@ -284,10 +284,12 @@ helpButton.addEventListener('mouseenter', function() {
 helpButton.addEventListener('mouseleave', function() {
     this.style.transform='scale(1)';
 })
+let helpContainer = document.getElementById("help-container")
 helpButton.addEventListener('click', function(event) {
     event.stopPropagation();
     event.preventDefault();
     helpButton.classList.toggle("top-left-buttons-clicked");
+    helpContainer.classList.toggle("help-container-shift");
 });
 
 snapButton.addEventListener('mousedown', function() {
