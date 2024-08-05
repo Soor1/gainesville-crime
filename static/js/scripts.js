@@ -533,6 +533,22 @@ heapButton.addEventListener('click', async function () {
         console.log(flattened);
         const kthLargestHeap = kLargestHeap(flattened, k); 
         console.log(kthLargestHeap);
+        let heatConstant = 200;
+        let heatMapData = [];
+        for (let i = 0; i < k; i++) {
+            let row = kthLargestHeap[i][1];
+            let col = kthLargestHeap[i][2];
+            let lat = southBoundary + row * latDiff;
+            let long = westBoundary + col * longDiff;
+            heatMapData.push([lat, long, heatConstant/(i+1)]);
+        }
+        var heat = L.heatLayer(
+            heatMapData, // lat, lng, intensity
+            {radius: 25},{gradient:{
+                0.4: 'lime',
+                0.75: 'yellow',
+                1.0: 'red'}}).addTo(map);
+            
 
 });
 
