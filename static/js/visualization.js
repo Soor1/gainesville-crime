@@ -300,3 +300,43 @@ reset_btn.addEventListener("click", function () {
     controller.abort();
     window.location.reload();
 });
+
+// Grow and Shrink logic for buttons
+sort_btn.addEventListener('mousedown', function() {
+    this.style.transform='scale(0.9)';
+});
+sort_btn.addEventListener('mouseup', function() {
+    this.style.transform='scale(1.1)';
+});
+sort_btn.addEventListener('mouseenter', function() {
+    this.style.transform='scale(1.1)';
+})
+sort_btn.addEventListener('mouseleave', function() {
+    this.style.transform='scale(1)';
+})
+
+reset_btn.addEventListener('mousedown', function() {
+    this.style.transform='scale(0.9)';
+});
+reset_btn.addEventListener('mouseup', function() {
+    this.style.transform='scale(1.1)';
+});
+reset_btn.addEventListener('mouseenter', function() {
+    this.style.transform='scale(1.1)';
+})
+reset_btn.addEventListener('mouseleave', function() {
+    this.style.transform='scale(1)';
+})
+
+sort_select.addEventListener('mousedown', function() {
+    this.style.transform='scale(0.9)';
+});
+sort_select.addEventListener('mouseup', function() {
+    this.style.transform='scale(1.1)';
+});
+sort_select.addEventListener('mouseenter', function() {
+    this.style.transform='scale(1.1)';
+})
+sort_select.addEventListener('mouseleave', function() {
+    this.style.transform='scale(1)';
+})

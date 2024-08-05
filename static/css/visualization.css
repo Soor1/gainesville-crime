@@ -63,7 +63,7 @@ body {
 .container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     height: 90vh;
     padding: 60px 60px 0px 60px;
@@ -73,18 +73,25 @@ body {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    flex-grow: 1;
     margin-bottom: 0px;
 }
 
 .box {
-    border: 7px solid #0f141d;
+    border: 7px solid rgb(0, 33, 165);
     border-radius: 20px;
     height: 70vh;
     width: 100vw;
     background: #edf2f4;
     padding: 10px;
     overflow: hidden;
+    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.7);
+}
+
+#sort_title{
+    color: black;
+    font-size: 4vh;
+    font-weight: 700;
+    margin: 1vh 0 0 1vw;
 }
 
 .bars_container {
@@ -104,28 +111,51 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 25px;
     padding: 10px;
-    margin-bottom: 0px;
+    margin: 10px;
 }
 
 .buttons_container > button,
 select {
-    width: 200px;
-    height: 30px;
-    background-color: #677685;
+    width: 250px;
+    height: 60px;
+    background: linear-gradient(
+        to top,
+        rgb(0, 33, 165) ,
+        rgb(169, 161, 255)
+    );
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.7);
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     color: white;
-    font-size: 14px;
+    font-size: 2.5vh;
+    font-weight: 700;
+    font-family: Helvetica;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.3s ease-in-out;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+select:focus {
+    outline: none;
+}
+
+.buttons_container option{
+    width: 250px;
+    height: 60px;
+    background: rgb(0, 33, 165);
+    border: none;
+    color: white;
+    font-size: 2.5vh;
+    font-weight: 700;
+    font-family: Helvetica;
     cursor: pointer;
     text-align: center;
     transition: 0.2s ease-in-out;
-}
-
-.buttons_container > button:hover,
-select:hover {
-    background-color: #55666d;
 }
 
 @media (max-width: 800px) {
