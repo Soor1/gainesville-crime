@@ -520,10 +520,8 @@ heapButton.addEventListener('click', async function () {
 
             let row = Math.floor((lat - southBoundary) / latDiff);
             let col = Math.floor((long - westBoundary) / longDiff);
-            console.log(row,col);
             gridHash[row][col] += 1;
         }
-        console.log(gridHash);
         const flattened = [];
         const rows = gridHash.length;
         const cols = gridHash[0].length;
