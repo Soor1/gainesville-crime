@@ -30,27 +30,40 @@ function kLargestQuickSort(v,k){
   return v.slice(v.length-k,v.length);
 }
 
+function heapify(nums, index, size) {
+  let greatest = index;
+  let left = 2 * index + 1;
+  let right = 2 * index + 2;
 
+  if (left < size && nums[left][0] > nums[greatest][0]) {
+      greatest = left;
+  }
+  if (right < size && nums[right][0] > nums[greatest][0]) {
+      greatest = right;
+  }
+  if (greatest !== index) {
+      [nums[index], nums[greatest]] = [nums[greatest], nums[index]];
+      heapify(nums, greatest, size);
+  }
+}
 
+function heapSort(nums) {
+  let size = nums.length;
+
+  for (let x = Math.floor(size / 2) - 1; x >= 0; x--) {
+      heapify(nums, x, size);
+  }
+
+  for (let x = size - 1; x > 0; x--) {
+      [nums[0], nums[x]] = [nums[x], nums[0]];
+      heapify(nums, 0, x);
+  }
+}
 // Function to find k largest array element using heaps
 function kLargestHeap(v,k) { 
-  // Implementation using
-  // a Priority Queue
-  const pq = [];
-  v.forEach(val => pq.push(val));
-  pq.sort((a, b) => a - b);
-
-  // If size of the priority
-  // queue exceeds k
-  if (pq.length > k) {
-    pq.splice(0, pq.length - k);
-  }
-  let arr = []
-  // Print the k largest element
-  while (pq.length !== 0) {
-    arr.push(pq.shift());
-  }
-  return arr;
+  heapSort(v);
+  return v.slice(v.length-k,v.length);
+  
 }
 
  
@@ -69,4 +82,4 @@ let iterator = array.values();
 for (let value of iterator) {
 console.log(value);
 }*/
-export {kLargestQuickSort,kLargestHeap};
+export {kLargestQuickSort,kLargestHeap}
