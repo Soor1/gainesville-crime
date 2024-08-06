@@ -1,4 +1,4 @@
-import {kLargestHeap, kLargestQuickSort} from "./kthElement.js";
+import {kLargestHeap, kLargestShellSort} from "./kthElement.js";
 const value = document.querySelector("#value");
 const radius = document.querySelector("#radius");
 let aeds = document.querySelector("#Aeds");
@@ -456,6 +456,69 @@ bpButton.addEventListener('click', async function(event) {
     }
 });
 
+async function fetchDataAndProcess(startTime, endTime, latitude, longitude, radius) {
+    // Build the query string
+    let queryString = `startTime=${startTime}&endTime=${endTime}&latitude=${latitude}&longitude=${longitude}&radius=${radius}`;
+    var coordList = [];
+
+    // Fetch data from the server
+    await fetch(`/crimes?${queryString}`)
+        .then(response => response.json())
+        .then(data => {
+            for (let key in data) {
+                if (data.hasOwnProperty(key)) {
+                    for(let i = 0; i < data[key].length; i++) {
+                        let temp = [];
+                        temp.push(data[key][i][0]);
+                        temp.push(data[key][i][1]);
+                        coordList.push(temp);
+                    }
+                }
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching data:", error);
+        });
+
+    // Define grid boundaries and grid size
+    let numLatBoxes = 500;
+    let numLongBoxes = 500;
+    let gridHash = new Array(numLongBoxes);
+    for (let i = 0; i < numLatBoxes; i++) {
+        gridHash[i] = new Array(numLatBoxes).fill(0);
+    }
+    let westBoundary = -82.43;
+    let southBoundary = 29.59;
+    let eastBoundary = -82.23;
+    let northBoundary = 29.78;
+
+    let latDiff = (northBoundary - southBoundary) / numLatBoxes;
+    let longDiff = (eastBoundary - westBoundary) / numLongBoxes;
+
+    // Populate the grid with crime data
+    for (let i = 0; i < coordList.length; i++){
+        let lat = coordList[i][0];
+        let long = coordList[i][1];
+
+        let row = Math.floor((lat - southBoundary) / latDiff);
+        let col = Math.floor((long - westBoundary) / longDiff);
+        if(0 <= row && row < numLatBoxes && 0 <= col && col < numLongBoxes)
+            gridHash[row][col] += 1;
+    }
+
+    // Flatten the grid data for sorting
+    const flattened = [];
+    const rows = gridHash.length;
+    const cols = gridHash[0].length;
+    for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+            flattened.push([gridHash[row][col], row, col]);
+        }
+    }
+
+    return flattened;
+}
+
 
 let heapButton = document.getElementById("heap-button");
 heapButton.addEventListener('click', async function () {
@@ -489,87 +552,102 @@ heapButton.addEventListener('click', async function () {
     console.log(startTime);
     console.log(endTime);
 
-    // Build the query string
-    let queryString = `startTime=${startTime}&endTime=${endTime}&latitude=${latitude}&longitude=${longitude}&radius=${radius}`;
-    var coordList = [];
-    // Fetch data from the server
-    await fetch(`/crimes?${queryString}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log("Data from /crimes:", data);
-            for (let key in data) {
-                if (data.hasOwnProperty(key)) {
-                    for(let i = 0; i < data[key].length; i++) {
-                        let temp = [];
-                        temp.push(data[key][i][0]);
-                        temp.push(data[key][i][1]);
-                        coordList.push(temp);
-                    }
-                }
-            }
-        })
-        .catch(error => {
-            console.error("Error fetching data:", error);
-        });
-        console.log(coordList);
-        //coordList is a list of all of the latitude and longitude coordinates
+    const flattened = await fetchDataAndProcess(startTime, endTime, latitude, longitude, radius);
+    console.log(flattened);
 
-        //number of grid boxes for hashmap in each direction based off of the radius
-        let numLatBoxes = 500;
-        let numLongBoxes = 500;
-        let gridHash = new Array(numLongBoxes);
+    const kthLargestHeap = kLargestHeap(flattened, k); 
+    console.log(kthLargestHeap);
 
-        for (let i = 0; i < numLatBoxes; i++) {
-        gridHash[i] = new Array(numLatBoxes).fill(0); // Initialize each element to 0 (or any default value)
-        }
-        let westBoundary = -82.43;
-        let southBoundary = 29.59;
-        let eastBoundary = -82.23;
-        let northBoundary = 29.78;
+    let heatConstant = 100;
 
-        let latDiff = (northBoundary - southBoundary) / numLatBoxes;
-        let longDiff = (eastBoundary - westBoundary) / numLongBoxes;
+    let heatMapData = [];
+
+    let numLatBoxes = 500;
+    let numLongBoxes = 500;
+
+    let westBoundary = -82.43;
+    let southBoundary = 29.59;
+    let eastBoundary = -82.23;
+    let northBoundary = 29.78;
+
+    let latDiff = (northBoundary - southBoundary) / numLatBoxes;
+    let longDiff = (eastBoundary - westBoundary) / numLongBoxes;
         
-        //implement a hashmap where max value is 499 and smallest is 0
-        //maps are backed by hashtables in js so theoretically lookup time is O(1). You can inmplement the hashmap with a 2d array or with a map.
-
-        for (let i = 0; i < coordList.length; i++){
-            let lat = coordList[i][0];
-            let long = coordList[i][1];
-
-            let row = Math.floor((lat - southBoundary) / latDiff);
-            let col = Math.floor((long - westBoundary) / longDiff);
-            if(0 <= row && row < numLatBoxes && 0 <= col && col < numLongBoxes)
-                gridHash[row][col] += 1;
-        }
-        const flattened = [];
-        const rows = gridHash.length;
-        const cols = gridHash[0].length;
-        for (let row = 0; row < rows; row++) {
-            for (let col = 0; col < cols; col++) {
-            flattened.push([gridHash[row][col], row, col]);
-            }
-        }
-        console.log(flattened);
-        const kthLargestHeap = kLargestHeap(flattened, k); 
-        console.log(kthLargestHeap);
-        let heatConstant = 100;
-
-        let heatMapData = [];
-        
-        for (let i = 0; i < k; i++) {
-            let row = kthLargestHeap[i][1];
-            let col = kthLargestHeap[i][2];
-            let lat = southBoundary + row * latDiff;
-            let long = westBoundary + col * longDiff;
-            heatMapData.push([lat, long, heatConstant/(i+1)]);
+    for (let i = 0; i < k; i++) {
+        let row = kthLargestHeap[i][1];
+        let col = kthLargestHeap[i][2];
+        let lat = southBoundary + row * latDiff;
+        let long = westBoundary + col * longDiff;
+        heatMapData.push([lat, long, heatConstant/(i+1)]);
         }
         
-        removeHeatLayer();
-        heat = createHeatLayer(heatMapData).addTo(map);
-        
-        
+    removeHeatLayer();
+    heat = createHeatLayer(heatMapData).addTo(map);
+});
 
+let quickSortButton = document.getElementById("quicksort-button");
+
+quickSortButton.addEventListener('click', async function () {
+    // console.log("button clicked");
+    let startTime = document.getElementById("start-time").value;
+    let endTime = document.getElementById("end-time").value;
+    let latitude = document.getElementById("latitude").value;
+    let longitude = document.getElementById("longitude").value;
+    let radius = document.getElementById("radius").value;
+    let k = document.getElementById("k").value;
+
+    // console.log(typeof latitude);
+    // console.log(typeof longitude);
+    // console.log(typeof radius);
+
+    latitude = parseFloat(latitude);
+    longitude = parseFloat(longitude);
+    radius = parseFloat(radius);
+
+    if (!startTime) {
+        startTime = "0";
+    }
+
+    if (!endTime) {
+        endTime = "24";
+    }
+
+    startTime = parseInt(startTime);
+    endTime = parseInt(endTime);
+
+    console.log(startTime);
+    console.log(endTime);
+    const flattened = await fetchDataAndProcess(startTime, endTime, latitude, longitude, radius);
+    console.log(flattened);
+
+    const kthLargestShellSort = kLargestShellSort(flattened, k); 
+    console.log(kthLargestShellSort);
+    
+    let heatConstant = 100;
+
+    let heatMapData = [];
+
+    let numLatBoxes = 500;
+    let numLongBoxes = 500;
+
+    let westBoundary = -82.43;
+    let southBoundary = 29.59;
+    let eastBoundary = -82.23;
+    let northBoundary = 29.78;
+
+    let latDiff = (northBoundary - southBoundary) / numLatBoxes;
+    let longDiff = (eastBoundary - westBoundary) / numLongBoxes;
+        
+    for (let i = 0; i < k; i++) {
+        let row = kthLargestShellSort[i][1];
+        let col = kthLargestShellSort[i][2];
+        let lat = southBoundary + row * latDiff;
+        let long = westBoundary + col * longDiff;
+        heatMapData.push([lat, long, heatConstant/(i+1)]);
+        }
+        
+    removeHeatLayer();
+    heat = createHeatLayer(heatMapData).addTo(map);
 });
 
 

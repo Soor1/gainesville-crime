@@ -1,32 +1,22 @@
-//From geeksforgeeks
-function partition(arr, low, high) { 
-  let pivot = arr[high]; 
-  let i = low - 1; 
+function shellSort(nums) {
+  for (
+      let gap = Math.floor(nums.length / 2);
+      gap > 0;
+      gap = Math.floor(gap / 2)
+  ) {
+      for (let x = gap; x < nums.length; x++) {
+          let temp = nums[x];
+          let y;
+          for (y = x; y >= gap && nums[y - gap][0] > temp[0]; y -= gap) {
+              nums[y] = nums[y - gap];
+          }
+          nums[y] = temp;
+      }
+  }
+}
 
-  for (let j = low; j <= high - 1; j++) { 
-      // If current element is smaller than the pivot 
-      if (arr[j] < pivot) { 
-          // Increment index of smaller element 
-          i++; 
-          // Swap elements 
-          [arr[i], arr[j]] = [arr[j], arr[i]];  
-      } 
-  } 
-  // Swap pivot to its correct position 
-  [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];  
-  return i + 1; // Return the partition index 
-} 
-
-function quickSort(arr, low, high) { 
-  if (low >= high) return; 
-  let pi = partition(arr, low, high); 
-
-  quickSort(arr, low, pi - 1); 
-  quickSort(arr, pi + 1, high); 
-} 
-
-function kLargestQuickSort(v,k){
-  quickSort(v,0,v.length-1);
+function kLargestShellSort(v,k){
+  shellSort(v);
   return v.slice(v.length-k,v.length);
 }
 
@@ -82,4 +72,4 @@ let iterator = array.values();
 for (let value of iterator) {
 console.log(value);
 }*/
-export {kLargestQuickSort,kLargestHeap}
+export {kLargestShellSort,kLargestHeap}
