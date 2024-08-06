@@ -562,8 +562,10 @@ heapButton.addEventListener('click', async function () {
     const flattened = await fetchDataAndProcess(startTime, endTime, latitude, longitude, radius);
     console.log(flattened);
 
-    const kthLargestHeap = kLargestHeap(flattened, k); 
-    console.log(kthLargestHeap);
+    let count = [0];
+
+    const kthLargestHeap = kLargestHeap(flattened, k, count); 
+    console.log(count[0]);
 
     let heatConstant = 100;
 
@@ -586,7 +588,7 @@ heapButton.addEventListener('click', async function () {
         let lat = southBoundary + row * latDiff;
         let long = westBoundary + col * longDiff;
         if(kthLargestHeap[i][0] > 0)
-            heatMapData.push([lat, long, heatConstant/(i+1)]);
+            heatMapData.push([lat, long, Math.max(0.1,heatConstant/(i+1))]);
         }
         
     removeHeatLayer();
@@ -628,8 +630,10 @@ quickSortButton.addEventListener('click', async function () {
     const flattened = await fetchDataAndProcess(startTime, endTime, latitude, longitude, radius);
     console.log(flattened);
 
-    const kthLargestShellSort = kLargestShellSort(flattened, k); 
-    console.log(kthLargestShellSort);
+    let count = [0];
+
+    const kthLargestShellSort = kLargestShellSort(flattened, k, count); 
+    console.log(count[0]);
     
     let heatConstant = 100;
 
