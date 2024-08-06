@@ -465,13 +465,6 @@ bpButton.addEventListener('click', async function(event) {
             const jsonData = await fetchSnap();
             disSnap(jsonData)
         }
-        //     // .openPopup();
-        // let circle = L.circle(marker.getLatLng(), {
-        //     color: "blue",
-        //     fillColor: "#0032fc",
-        //     fillOpacity: 0.5,
-        //     radius: radius.value * 1609.344,
-        // }).addTo(map);
     }
 });
 
@@ -515,6 +508,11 @@ async function fetchDataAndProcess(startTime, endTime, latitude, longitude, radi
     let latDiff = (northBoundary - southBoundary) / numLatBoxes;
     let longDiff = (eastBoundary - westBoundary) / numLongBoxes;
 
+    let maxRow = 499;
+    let minRow = 0;
+    let maxCol = 499;
+    let minCol = 0;
+
     // Populate the grid with crime data
     let inBoundsCount = 0;
     for (let i = 0; i < coordList.length; i++){
@@ -523,6 +521,7 @@ async function fetchDataAndProcess(startTime, endTime, latitude, longitude, radi
 
         let row = Math.floor((lat - southBoundary) / latDiff);
         let col = Math.floor((long - westBoundary) / longDiff);
+
         if(0 <= row && row < numLatBoxes && 0 <= col && col < numLongBoxes)
             gridHash[row][col] += 1;
             inBoundsCount++;
@@ -596,11 +595,13 @@ heapButton.addEventListener('click', async function () {
     console.log(startTime);
     console.log(endTime);
 
+    //get flattened array from fetched data
     const flattened = await fetchDataAndProcess(startTime, endTime, latitude, longitude, radius);
     console.log(flattened);
 
     let count = [0];
 
+    //input flattened array into function, undo hash function, and place k largest crime hotspots into heat map
     const kthLargestHeap = kLargestHeap(flattened, k, count);
     console.log(count[0]);
     let heapOutput = document.getElementById("heap-output");
@@ -686,11 +687,14 @@ shellSortButton.addEventListener('click', async function () {
 
     console.log(startTime);
     console.log(endTime);
+
+    //get flattened data
     const flattened = await fetchDataAndProcess(startTime, endTime, latitude, longitude, radius);
     console.log(flattened);
 
     let count = [0];
 
+    //input flattened array into function, undo hash function, and place k largest crime hotspots into heat map
     const kthLargestShellSort = kLargestShellSort(flattened, k, count);
     console.log(count[0]);
     let shellOutput = document.getElementById("shell-output");
