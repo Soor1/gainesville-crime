@@ -496,6 +496,7 @@ async function fetchDataAndProcess(startTime, endTime, latitude, longitude, radi
     let longDiff = (eastBoundary - westBoundary) / numLongBoxes;
 
     // Populate the grid with crime data
+    let inBoundsCount = 0;
     for (let i = 0; i < coordList.length; i++){
         let lat = coordList[i][0];
         let long = coordList[i][1];
@@ -504,6 +505,11 @@ async function fetchDataAndProcess(startTime, endTime, latitude, longitude, radi
         let col = Math.floor((long - westBoundary) / longDiff);
         if(0 <= row && row < numLatBoxes && 0 <= col && col < numLongBoxes)
             gridHash[row][col] += 1;
+            inBoundsCount++;
+    }
+    if (inBoundsCount === 0){
+        console.log("No crimes found in the specified area."); 
+        return [];
     }
 
     // Flatten the grid data for sorting
@@ -578,7 +584,8 @@ heapButton.addEventListener('click', async function () {
         let col = kthLargestHeap[i][2];
         let lat = southBoundary + row * latDiff;
         let long = westBoundary + col * longDiff;
-        heatMapData.push([lat, long, heatConstant/(i+1)]);
+        if(kthLargestHeap[i][0] > 0)
+            heatMapData.push([lat, long, heatConstant/(i+1)]);
         }
         
     removeHeatLayer();
@@ -643,7 +650,8 @@ quickSortButton.addEventListener('click', async function () {
         let col = kthLargestShellSort[i][2];
         let lat = southBoundary + row * latDiff;
         let long = westBoundary + col * longDiff;
-        heatMapData.push([lat, long, heatConstant/(i+1)]);
+        if(kthLargestShellSort[i][0] > 0)
+            heatMapData.push([lat, long, heatConstant/(i+1)]);
         }
         
     removeHeatLayer();
