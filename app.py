@@ -3,7 +3,6 @@ import sqlite3
 from math import radians, cos, sin, sqrt, atan2
 from datetime import datetime
 import json
-import heapq
 
 app = Flask(__name__)
 
@@ -18,29 +17,6 @@ def haversine(lat1, lon1, lat2, lon2):
 
     distance = R * c
     return distance
-
-def kLargestHeap(v, k):
-
-    # Implementation using
-    # a Priority Queue
-    pq = []
-    heapq.heapify(pq)
-
-    for i in range(len(v)):
-
-        # Insert elements into
-        # the priority queue
-        heapq.heappush(pq, v[i])
-
-        # If size of the priority
-        # queue exceeds k
-        if (len(pq) > k):
-            heapq.heappop(pq)
-    # Orders elements into a new list of largest elements
-    res = []
-    while(len(pq) != 0):
-        res.append(heapq.heappop(pq))
-    return res
 
 # ----------------- Data Routes -----------------
 
