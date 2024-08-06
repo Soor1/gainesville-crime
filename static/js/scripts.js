@@ -592,7 +592,7 @@ heapButton.addEventListener('click', async function () {
     heat = createHeatLayer(heatMapData).addTo(map);
 });
 
-let quickSortButton = document.getElementById("quicksort-button");
+let quickSortButton = document.getElementById("shellsort-button");
 
 quickSortButton.addEventListener('click', async function () {
     // console.log("button clicked");
