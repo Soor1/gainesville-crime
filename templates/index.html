@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+    <!-- Set up html page by importing css etc -->
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link
@@ -11,6 +12,7 @@
         <link rel="stylesheet" href="../static/css/index.css" />
     </head>
     <body>
+        <!-- set header links -->
         <div id="header">
             <h1 id="title">Gainesville Crime</h1>
             <!-- <a href="{{ url_for('about') }}" id="about-link">About</a> -->
@@ -23,6 +25,7 @@
                 alt="UF Logo"
             />
         </div>
+        <!-- set up the help button -->
         <div id="map-and-input-container">
             <div id="entry-fields-container" class="box">
                 <h1>Custom Fields</h1>
@@ -57,6 +60,7 @@
                     </p>
                 </div>
 
+                <!-- set up the search adress bar -->
                 <div class="input-container">
                     <label for="search-address">Address</label>
                     <input
@@ -66,15 +70,7 @@
                     />
                 </div>
 
-                <!-- <div class="input-container">
-                    <label for="zip">Zipcode</label>
-                    <input
-                        type="text"
-                        id="zip"
-                        placeholder="Enter Zipcode"
-                    />
-                </div> -->
-
+                <!-- set up the latitude and longitude input fields -->
                 <div class="double-input-container">
                     <div>
                         <label for="latitude">Latitude:</label>
@@ -100,6 +96,7 @@
                     </div>
                 </div>
 
+                <!-- set up the radius input field -->
                 <div class="input-container">
                     <label for="radius"
                         >Radius: <output id="value"></output> mi</label
@@ -116,6 +113,7 @@
                     />
                 </div>
 
+                <!-- set up the date input fields -->
                 <div class="double-input-container">
                     <div>
                         <label for="start-time">Start Time:</label>
@@ -132,6 +130,7 @@
                     <input type="number" id="k" value="100" />
                 </div>
 
+                <!-- set up the sort type input field -->
                 <div class="double-input-container">
                     <div class="sort-button-container">
                         <button
@@ -157,6 +156,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- set up the map and top left buttons -->
             <div id="map">
                 <button id="btn2" class="top-left-buttons">SNAP</button>
                 <button id="btn3" class="top-left-buttons">AED</button>
