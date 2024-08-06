@@ -192,6 +192,7 @@ map.on("click", async function (e) {
     console.log(coords[1]);
 
     addressSetup(marker.getLatLng().lat.toFixed(5), marker.getLatLng().lng.toFixed(5));
+    removeHeatLayer();
 });
 
 
