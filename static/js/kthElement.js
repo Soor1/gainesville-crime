@@ -1,3 +1,4 @@
+//Shellsort function
 function shellSort(nums, count) {
   for (
       let gap = Math.floor(nums.length / 2);
@@ -21,6 +22,7 @@ function shellSort(nums, count) {
   }
 }
 
+//takes last k elements (greatest elements) from sorted array
 function kLargestShellSort(v,k,count){
   console.log(v.length);
   shellSort(v,count);
@@ -32,6 +34,7 @@ function kLargestShellSort(v,k,count){
 
 }
 
+//heapify helper function for heapsort
 function heapify(nums, index, size, count) {
   let greatest = index;
   let left = 2 * index + 1;
@@ -55,6 +58,7 @@ function heapify(nums, index, size, count) {
   }
 }
 
+//heapsort function
 function heapSort(nums, count) {
   let size = nums.length;
 
@@ -70,7 +74,7 @@ function heapSort(nums, count) {
       heapify(nums, 0, x, count);
   }
 }
-// Function to find k largest array element using heaps
+//takes last k elements (greatest elements) from sorted array
 function kLargestHeap(v,k,count) { 
   heapSort(v,count);
   if(v.length > k)
@@ -80,20 +84,4 @@ function kLargestHeap(v,k,count) {
   
 }
 
- 
-
-/*// driver program
-
-// Given array
-const arr = [11, 3, 2, 1, 15, 5, 4, 45, 88, 96, 50, 45];
-// Size of array
-const n = arr.length;
-const k = 3;
-console.log(`${k} largest elements are: `);
-let array = kLargestQuickSort(arr,k);
-let iterator = array.values();
-
-for (let value of iterator) {
-console.log(value);
-}*/
 export {kLargestShellSort,kLargestHeap}
