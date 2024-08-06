@@ -102,7 +102,7 @@ let marker = L.marker([startLatitude, startLongitude], { icon: orangeIcon })
 let circle = L.circle(marker.getLatLng(), {
     color: "blue",
     fillColor: "#0032fc",
-    fillOpacity: 0.5,
+    fillOpacity: 0.25,
     radius: radius.value * 1609.344,
 }).addTo(map);
 
@@ -528,7 +528,28 @@ async function fetchDataAndProcess(startTime, endTime, latitude, longitude, radi
 
 
 let heapButton = document.getElementById("heap-button");
+
+heapButton.addEventListener('mousedown', function() {
+    this.style.transform='scale(0.9)';
+});
+heapButton.addEventListener('mouseup', function() {
+    this.style.transform='scale(1.15)';
+});
+heapButton.addEventListener('mouseenter', function() {
+    this.style.transform='scale(1.15)';
+})
+heapButton.addEventListener('mouseleave', function() {
+    this.style.transform='scale(1)';
+})
+
 heapButton.addEventListener('click', async function () {
+
+    // Front end loading logic
+    heapButton.classList.add('button-loading');
+    let spinner = document.createElement('div');
+    spinner.classList.add('loading-spinner');
+    heapButton.appendChild(spinner);
+
     // console.log("button clicked");
     let startTime = document.getElementById("start-time").value;
     let endTime = document.getElementById("end-time").value;
@@ -566,6 +587,8 @@ heapButton.addEventListener('click', async function () {
 
     const kthLargestHeap = kLargestHeap(flattened, k, count); 
     console.log(count[0]);
+    let heapOutput = document.getElementById("heap-output");
+    heapOutput.innerText = count[0];
 
     let heatConstant = 100;
 
@@ -593,11 +616,34 @@ heapButton.addEventListener('click', async function () {
         
     removeHeatLayer();
     heat = createHeatLayer(heatMapData).addTo(map);
+
+    heapButton.classList.remove('button-loading');
+    heapButton.removeChild(spinner);
 });
 
-let quickSortButton = document.getElementById("shellsort-button");
+let shellSortButton = document.getElementById("shellsort-button");
 
-quickSortButton.addEventListener('click', async function () {
+shellSortButton.addEventListener('mousedown', function() {
+    this.style.transform='scale(0.9)';
+});
+shellSortButton.addEventListener('mouseup', function() {
+    this.style.transform='scale(1.15)';
+});
+shellSortButton.addEventListener('mouseenter', function() {
+    this.style.transform='scale(1.15)';
+})
+shellSortButton.addEventListener('mouseleave', function() {
+    this.style.transform='scale(1)';
+})
+
+shellSortButton.addEventListener('click', async function () {
+
+    // Front end loading logic
+    shellSortButton.classList.add('button-loading');
+    let spinner = document.createElement('div');
+    spinner.classList.add('loading-spinner');
+    shellSortButton.appendChild(spinner);
+
     // console.log("button clicked");
     let startTime = document.getElementById("start-time").value;
     let endTime = document.getElementById("end-time").value;
@@ -634,6 +680,8 @@ quickSortButton.addEventListener('click', async function () {
 
     const kthLargestShellSort = kLargestShellSort(flattened, k, count); 
     console.log(count[0]);
+    let shellOutput = document.getElementById("shell-output");
+    shellOutput.innerText = count[0];
     
     let heatConstant = 100;
 
@@ -661,9 +709,45 @@ quickSortButton.addEventListener('click', async function () {
         
     removeHeatLayer();
     heat = createHeatLayer(heatMapData).addTo(map);
+
+    shellSortButton.classList.remove('button-loading');
+    shellSortButton.removeChild(spinner);
 });
 
+// Input error logic
+let kInput = document.getElementById("k");
 
+kInput.addEventListener("input", () => {
+
+    if (Number(kInput.value) >= 250000){
+        kInput.value = "250000";
+        alert("Number of top crime areas cannot exceed 250000");
+    }
+
+})
+
+let startTime = document.getElementById("start-time");
+let endTime = document.getElementById("end-time");
+
+startTime.addEventListener("input", () => {
+
+    if ((Number(endTime.value.substring(0, 2)) * 100 + Number(endTime.value.substring(3, 5))) < (Number(startTime.value.substring(0, 2)) * 100 + Number(startTime.value.substring(3, 5)))){
+        startTime.value = "00:00";
+        endTime.value = "23:59";
+        alert("End time must be later than start time");
+    }
+
+})
+
+endTime.addEventListener("input", () => {
+
+    if ((Number(endTime.value.substring(0, 2)) * 100 + Number(endTime.value.substring(3, 5))) < (Number(startTime.value.substring(0, 2)) * 100 + Number(startTime.value.substring(3, 5)))){
+        startTime.value = "00:00";
+        endTime.value = "23:59";
+        alert("End time must be later than start time");
+    }
+
+})
 
 
 
