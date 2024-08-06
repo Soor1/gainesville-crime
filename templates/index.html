@@ -13,9 +13,15 @@
     <body>
         <div id="header">
             <h1 id="title">Gainesville Crime</h1>
-            <a href="{{ url_for('about') }}" id="about-link">About</a>
-            <a href="{{ url_for('visualization') }}" id="time-complexity-link">Complexity Visualization</a>
-            <img src="../static/resources/UFLogo.png" id="uf-logo" alt="UF Logo"/>
+            <!-- <a href="{{ url_for('about') }}" id="about-link">About</a> -->
+            <a href="{{ url_for('visualization') }}" id="time-complexity-link"
+                >Complexity Visualization</a
+            >
+            <img
+                src="../static/resources/UFLogo.png"
+                id="uf-logo"
+                alt="UF Logo"
+            />
         </div>
         <div id="map-and-input-container">
             <div id="entry-fields-container" class="box">
@@ -23,17 +29,31 @@
                 <button id="btn1" class="btn1-class">?</button>
 
                 <div id="help-container" class="help-container-class">
-                    <h1 style="margin: 0 auto; ">Help</h1>
-                    <p style="margin: 0 auto; padding: 10px; font-size: 2.2vh; line-height: 3.2vh; text-align: center;">
-                        Welcome to Gainesville Crime! The goal of this web app is to produce a 
-                        heat map of the top areas of crime in Gainesville, while also exploring the differences in
-                        performance between computer science sorting algorithms. The two sorting algorithms being 
-                        utilized will be heap sort and shell sort. You can input several different filters
-                        to specify what results will get produced. You can also toggle the SNAP, AED, and Blue Phone 
-                        locations in the top left of the map. At the bottom of the custom input fields, you will
-                        see button for both heap sort and shell sort. Both will yield the same results in regards
-                        to the map, yet they will have difference in performance output. We will track this in
-                        terms of the number of operations each sort takes, and output this below each button.
+                    <h1 style="margin: 0 auto">Help</h1>
+                    <p
+                        style="
+                            margin: 0 auto;
+                            padding: 10px;
+                            font-size: 2.2vh;
+                            line-height: 3.2vh;
+                            text-align: center;
+                        "
+                    >
+                        Welcome to Gainesville Crime! The goal of this web app
+                        is to produce a heat map of the top areas of crime in
+                        Gainesville, while also exploring the differences in
+                        performance between computer science sorting algorithms.
+                        The two sorting algorithms being utilized will be heap
+                        sort and shell sort. You can input several different
+                        filters to specify what results will get produced. You
+                        can also toggle the SNAP, AED, and Blue Phone locations
+                        in the top left of the map. At the bottom of the custom
+                        input fields, you will see button for both heap sort and
+                        shell sort. Both will yield the same results in regards
+                        to the map, yet they will have difference in performance
+                        output. We will track this in terms of the number of
+                        operations each sort takes, and output this below each
+                        button.
                     </p>
                 </div>
 
@@ -81,7 +101,9 @@
                 </div>
 
                 <div class="input-container">
-                    <label for="radius">Radius: <output id="value"></output> mi</label>
+                    <label for="radius"
+                        >Radius: <output id="value"></output> mi</label
+                    >
                     <input
                         type="range"
                         id="radius"
@@ -97,32 +119,43 @@
                 <div class="double-input-container">
                     <div>
                         <label for="start-time">Start Time:</label>
-                        <input type="time" id="start-time" value="00:00"/>
+                        <input type="time" id="start-time" value="00:00" />
                     </div>
                     <div>
                         <label for="end-time">End Time:</label>
-                        <input type="time" id="end-time" value="23:59"/>
+                        <input type="time" id="end-time" value="23:59" />
                     </div>
                 </div>
 
                 <div class="input-container">
                     <label for="k">Number of Top Crime Areas:</label>
-                    <input type="number" id="k" value="100"/>
+                    <input type="number" id="k" value="100" />
                 </div>
 
-                <div class = "double-input-container">
+                <div class="double-input-container">
                     <div class="sort-button-container">
-                        <button type="submit" id="heap-button" class="sort-button">Heap Sort</button>
+                        <button
+                            type="submit"
+                            id="heap-button"
+                            class="sort-button"
+                        >
+                            Heap Sort
+                        </button>
                         <label class="operations-label">Operations:</label>
                         <p id="heap-output" class="sort-output">0</p>
                     </div>
                     <div class="sort-button-container">
-                        <button type="submit" id="shellsort-button" class="sort-button">Shell Sort</button>
+                        <button
+                            type="submit"
+                            id="shellsort-button"
+                            class="sort-button"
+                        >
+                            Shell Sort
+                        </button>
                         <label class="operations-label">Operations:</label>
                         <p id="shell-output" class="sort-output">0</p>
                     </div>
                 </div>
-
             </div>
             <div id="map">
                 <button id="btn2" class="top-left-buttons">SNAP</button>
@@ -137,26 +170,26 @@
             crossorigin=""
         ></script>
         <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
-        <script type = "module" src="../static/js/scripts.js"></script>
+        <script type="module" src="../static/js/scripts.js"></script>
         <script>
             let menuToggle = document.getElementById("menu-toggle");
             menuToggle.addEventListener("click", function (event) {
-                event.stopPropagation(); 
+                event.stopPropagation();
                 event.preventDefault();
                 document.body.classList.toggle("menu-open");
             });
-            menuToggle.addEventListener('mousedown', function() {
-                this.style.transform='scale(0.9)';
+            menuToggle.addEventListener("mousedown", function () {
+                this.style.transform = "scale(0.9)";
             });
-            menuToggle.addEventListener('mouseup', function() {
-                this.style.transform='scale(1.15)';
+            menuToggle.addEventListener("mouseup", function () {
+                this.style.transform = "scale(1.15)";
             });
-            menuToggle.addEventListener('mouseenter', function() {
-                this.style.transform='scale(1.15)';
-            })
-            menuToggle.addEventListener('mouseleave', function() {
-                this.style.transform='scale(1)';
-            })
+            menuToggle.addEventListener("mouseenter", function () {
+                this.style.transform = "scale(1.15)";
+            });
+            menuToggle.addEventListener("mouseleave", function () {
+                this.style.transform = "scale(1)";
+            });
         </script>
     </body>
 </html>
