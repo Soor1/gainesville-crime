@@ -1,3 +1,4 @@
+// This is the code for the merge sort, it divides the array into two halves and recursively sorts the two halves until the array is sorted
 function merge(nums, left, middle, right) {
     let n1 = middle - left + 1;
     let n2 = right - middle;
@@ -46,10 +47,4 @@ function mergeSort(nums, start, end) {
         mergeSort(nums, middle + 1, end);
         merge(nums, start, middle, end);
     }
-}
-
-let nums = [3, 2, 1, 5, 6, 4];
-mergeSort(nums, 0, nums.length - 1);
-for (let x of nums) {
-    console.log(x);
 }

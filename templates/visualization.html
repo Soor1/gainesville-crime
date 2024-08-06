@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
+        <! -- Here we set up our html by linking our css and setting a page title -->
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,6 +9,7 @@
         <title>Visualization</title>
     </head>
     <body>
+        <! -- Here we add links to the other pages in the header -->
         <div id="header">
             <h1 id="title">Time Complexity Visualization</h1>
             <a href="{{ url_for('about') }}" id="about-link">About</a>
@@ -18,6 +20,7 @@
                 alt="UF Logo"
             />
         </div>
+        <! -- Here we have html for the center box and bars inside that to visualize the sorting -->
         <div class="container">
             <div class="visualization_container">
                 <div class="box" id="sort_container">
@@ -25,6 +28,7 @@
                     <div class="bars_container" id="sort_bars"></div>
                 </div>
             </div>
+            <! -- Here we have html for the buttons to reset and sort the bars -->
             <div class="buttons_container">
                 <button id="reset_btn">Reset</button>
                 <select name="sort_select" id="sort_select">

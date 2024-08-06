@@ -1,3 +1,4 @@
+// This is the code for the shell sort, it finds an original gap and compares indicies across that gap until comparing adjacent elements
 function shellSort(nums) {
     for (
         let gap = Math.floor(nums.length / 2);
@@ -13,10 +14,4 @@ function shellSort(nums) {
             nums[y] = temp;
         }
     }
-}
-
-let nums = [3, 2, 1, 5, 6, 4];
-shellsort(nums);
-for (let x of nums) {
-    console.log(x);
 }

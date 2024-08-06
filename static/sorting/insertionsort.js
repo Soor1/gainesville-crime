@@ -1,3 +1,4 @@
+// This is the code for insertion sort, it takes an element from the array and compares it to the elements before it until it is in the correct position
 function insertionsort(nums, n) {
     for (let x = 0; x < n; x++) {
         let key = nums[x];
@@ -9,10 +10,4 @@ function insertionsort(nums, n) {
         }
         nums[y + 1] = key;
     }
-}
-
-let nums = [3, 2, 1, 5, 6, 4];
-insertionsort(nums, nums.length);
-for (let x of nums) {
-    console.log(x);
 }

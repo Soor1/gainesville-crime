@@ -1,3 +1,4 @@
+// This is the code for the selection sort, it finds the minimum element in the array and swaps it with the first element until the array is sorted
 function swap(nums, minIdx, currIdx) {
     let temp = nums[minIdx];
     nums[minIdx] = nums[currIdx];
@@ -14,10 +15,4 @@ function selectionSort(nums, n) {
         }
         swap(nums, minIdx, x);
     }
-}
-
-let nums = [3, 2, 1, 5, 6, 4];
-selectionSort(nums, nums.length);
-for (let x of nums) {
-    console.log(x);
 }

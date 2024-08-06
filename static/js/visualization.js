@@ -1,3 +1,4 @@
+// Initialize variables
 let sort_btn = document.getElementById("sort_btn");
 let reset_btn = document.getElementById("reset_btn");
 let sort_bars = document.getElementById("sort_bars");
@@ -9,6 +10,7 @@ let nums = [];
 let speedFactor = 25;
 let controller = new AbortController();
 
+// Function to generate random arrays to sort
 function randomArrays() {
     nums = [];
     for (let x = 0; x < numDataPoints; x++) {
@@ -18,6 +20,7 @@ function randomArrays() {
     console.log("Arrays generated");
 }
 
+// Function that rerenders all the bars at the appropritate size
 function renderBars(array, container) {
     container.innerHTML = "";
     for (let i = 0; i < array.length; i++) {
@@ -28,10 +31,12 @@ function renderBars(array, container) {
     }
 }
 
+// sleep function that allows the program to pause for a certain amount of time to show the shifting of elements in the sort
 function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+// Partition function for the quick sort which cuts the array into two parts and compares
 async function partition(nums, low, high, container, signal) {
     let pivot = nums[low];
     let up = low;
@@ -58,6 +63,7 @@ async function partition(nums, low, high, container, signal) {
     return down;
 }
 
+// Quick sort function that recursively sorts the array
 async function quicksort(nums, low, high, container, signal) {
     if (low < high) {
         let pivotIndex = await partition(nums, low, high, container, signal);
@@ -68,6 +74,7 @@ async function quicksort(nums, low, high, container, signal) {
     }
 }
 
+// Heapify function adds elements to the heap and puts in the correct position
 async function heapify(nums, index, size, container, signal) {
     let greatest = index;
     let left = 2 * index + 1;
@@ -88,6 +95,7 @@ async function heapify(nums, index, size, container, signal) {
     }
 }
 
+// Heap sort function that builds the heap and then extracts the top element from the heap
 async function heapsort(nums, container, signal) {
     let size = nums.length;
 
@@ -105,6 +113,7 @@ async function heapsort(nums, container, signal) {
     }
 }
 
+// Bubble sort function that compares adjacent elements and swaps them if they are in the wrong order
 async function bubblesort(nums, n, container, signal) {
     for (let x = 0; x < n - 1; x++) {
         for (let y = 0; y < n - x - 1; y++) {
@@ -118,6 +127,7 @@ async function bubblesort(nums, n, container, signal) {
     }
 }
 
+// Insertion sort function that builds the final sorted array one element at a time
 async function insertionsort(nums, n, container, signal) {
     for (let x = 0; x < n; x++) {
         let key = nums[x];
@@ -134,6 +144,7 @@ async function insertionsort(nums, n, container, signal) {
     }
 }
 
+// Merge function that merges two subarrays of the array
 async function merge(nums, left, middle, right, container, signal) {
     let n1 = middle - left + 1;
     let n2 = right - middle;
@@ -184,6 +195,7 @@ async function merge(nums, left, middle, right, container, signal) {
     }
 }
 
+// Merge sort function that recursively sorts the array
 async function mergesort(nums, start, end, container, signal) {
     if (start < end) {
         let middle = Math.floor(start + (end - start) / 2);
@@ -195,6 +207,7 @@ async function mergesort(nums, start, end, container, signal) {
     }
 }
 
+// Swap function that swaps two elements in the array
 async function swap(nums, minIdx, currIdx, container, signal) {
     let temp = nums[minIdx];
     nums[minIdx] = nums[currIdx];
@@ -204,6 +217,7 @@ async function swap(nums, minIdx, currIdx, container, signal) {
     if (signal.aborted) return;
 }
 
+// Selection sort function that selects the minimum element from the unsorted portion and swaps it with the first element
 async function selectionsort(nums, n, container, signal) {
     for (let x = 0; x < n - 1; x++) {
         let minIdx = x;
@@ -222,6 +236,7 @@ async function selectionsort(nums, n, container, signal) {
     }
 }
 
+// Shell sort function that sorts the array by comparing elements that are across the gap until the gap is reduced to adjacent elements
 async function shellsort(nums, container, signal) {
     for (
         let gap = Math.floor(nums.length / 2);
@@ -242,11 +257,13 @@ async function shellsort(nums, container, signal) {
     }
 }
 
+// Function that changes the title of the sorting algorithm deping on the selected option
 function changeTitle() {
     let newTitle = sort_select.value;
     sort_title.innerHTML = newTitle;
 }
 
+// Function that resets the array and the bars
 function reset() {
     randomArrays();
     renderBars(nums, sort_bars);
@@ -254,10 +271,12 @@ function reset() {
     changeTitle();
 }
 
+// Event listener that listens for page to load and calls the reset function
 window.onload = function () {
     reset();
 };
 
+// Event listener that listens for the sort select to change and calls the changeTitle function
 sort_select.addEventListener("change", function () {
     controller.abort();
     controller = new AbortController();
@@ -268,6 +287,7 @@ sort_select.addEventListener("change", function () {
     changeTitle();
 });
 
+// Event listener that listens for the sort button to be clicked and calls the sorting algorithm function
 sort_btn.addEventListener("click", async function () {
     let signal = controller.signal;
     if (sort_select.value === "Bubble Sort") {
@@ -286,15 +306,10 @@ sort_btn.addEventListener("click", async function () {
         await shellsort(nums, sort_bars, signal);
     }
 
-    // let sortBarsChildren = sort_bars.children;
-
-    // for (let bar of sortBarsChildren) {
-    //     bar.style.backgroundColor = "#0f141d";
-    // }
-
     console.log("Arrays sorted");
 });
 
+// Event listener that listens for the reset button to be clicked and calls the reset function
 reset_btn.addEventListener("click", function () {
     nums = [];
     controller.abort();
@@ -302,41 +317,41 @@ reset_btn.addEventListener("click", function () {
 });
 
 // Grow and Shrink logic for buttons
-sort_btn.addEventListener('mousedown', function() {
-    this.style.transform='scale(0.9)';
+sort_btn.addEventListener("mousedown", function () {
+    this.style.transform = "scale(0.9)";
 });
-sort_btn.addEventListener('mouseup', function() {
-    this.style.transform='scale(1.1)';
+sort_btn.addEventListener("mouseup", function () {
+    this.style.transform = "scale(1.1)";
 });
-sort_btn.addEventListener('mouseenter', function() {
-    this.style.transform='scale(1.1)';
-})
-sort_btn.addEventListener('mouseleave', function() {
-    this.style.transform='scale(1)';
-})
+sort_btn.addEventListener("mouseenter", function () {
+    this.style.transform = "scale(1.1)";
+});
+sort_btn.addEventListener("mouseleave", function () {
+    this.style.transform = "scale(1)";
+});
 
-reset_btn.addEventListener('mousedown', function() {
-    this.style.transform='scale(0.9)';
+reset_btn.addEventListener("mousedown", function () {
+    this.style.transform = "scale(0.9)";
 });
-reset_btn.addEventListener('mouseup', function() {
-    this.style.transform='scale(1.1)';
+reset_btn.addEventListener("mouseup", function () {
+    this.style.transform = "scale(1.1)";
 });
-reset_btn.addEventListener('mouseenter', function() {
-    this.style.transform='scale(1.1)';
-})
-reset_btn.addEventListener('mouseleave', function() {
-    this.style.transform='scale(1)';
-})
+reset_btn.addEventListener("mouseenter", function () {
+    this.style.transform = "scale(1.1)";
+});
+reset_btn.addEventListener("mouseleave", function () {
+    this.style.transform = "scale(1)";
+});
 
-sort_select.addEventListener('mousedown', function() {
-    this.style.transform='scale(0.9)';
+sort_select.addEventListener("mousedown", function () {
+    this.style.transform = "scale(0.9)";
 });
-sort_select.addEventListener('mouseup', function() {
-    this.style.transform='scale(1.1)';
+sort_select.addEventListener("mouseup", function () {
+    this.style.transform = "scale(1.1)";
 });
-sort_select.addEventListener('mouseenter', function() {
-    this.style.transform='scale(1.1)';
-})
-sort_select.addEventListener('mouseleave', function() {
-    this.style.transform='scale(1)';
-})
+sort_select.addEventListener("mouseenter", function () {
+    this.style.transform = "scale(1.1)";
+});
+sort_select.addEventListener("mouseleave", function () {
+    this.style.transform = "scale(1)";
+});

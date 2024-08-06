@@ -1,12 +1,15 @@
 import sqlite3
 import csv
 
-csv_file = "/Users/soorhansalia/gainesville-crime/Crime_Responses.csv"
-sqlite_db = '/Users/soorhansalia/gainesville-crime/db/crime.db'
+# Path to the csv file and sqlite db file
+csv_file = "path to csv file"
+sqlite_db = 'path to sqlite db file'
 
+# Connect to the sqlite db
 conn = sqlite3.connect(sqlite_db)
 cursor = conn.cursor()
 
+# Create the table if it doesn't exist based on the csv file
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS incidents (
         ID TEXT,
@@ -26,6 +29,7 @@ cursor.execute('''
     )
 ''')
 
+# Insert the data from the csv file into the sqlite db
 with open(csv_file, 'r') as file:
     reader = csv.reader(file)
     headers = next(reader)

@@ -1,3 +1,4 @@
+// This is the code for the quick sort, it uses a pivot to partition the array into two halves and recursively sorts the two halves until the array is sorted
 function partition(nums, low, high) {
     let pivot = nums[low];
     let up = low;
@@ -24,12 +25,4 @@ function quicksort(nums, low, high) {
         quicksort(nums, low, pivotIndex - 1);
         quicksort(nums, pivotIndex + 1, high);
     }
-}
-
-let nums = [3, 2, 1, 5, 6, 4];
-let low = 0;
-let high = nums.length - 1;
-quicksort(nums, low, high);
-for (let x of nums) {
-    console.log(x);
 }
