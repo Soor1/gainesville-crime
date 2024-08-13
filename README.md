@@ -10,7 +10,7 @@
 - To run `python3 app.py` from the project root
 
 # Tips
-1. Install DB Browser for SQL Lite (makes working with SQL Lite db's super easy)
+- Install DB Browser for SQL Lite (makes working with SQL Lite db's super easy)
 
 # References
 - https://data.cityofgainesville.org/Public-Safety/Crime-Responses/gvua-xt9q/data
